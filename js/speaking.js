@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadCategories() {
     try {
-        const res = await fetch("http://localhost:5000/api/speaking/categories");
+        const res = await fetch("https://speakora-sgdl.vercel.app/api/speaking/categories");
         const categories = await res.json();
 
         const container = document.getElementById("categoryContainer");
@@ -44,7 +44,7 @@ async function setCategory(category) {
     });
 
     try {
-        const res = await fetch(`http://localhost:5000/api/speaking/category/${category}`);
+        const res = await fetch(`https://speakora-sgdl.vercel.app/api/speaking/category/${category}`);
         sentences = await res.json();
         loadSentence();
     } catch (err) {
@@ -302,7 +302,7 @@ function calculateScore(spoken, target) {
 async function saveResult(spoken, accuracy) {
     const user = localStorage.getItem("currentUser") || "anonymous";
     try {
-        await fetch("http://localhost:5000/api/speaking/result", {
+        await fetch("https://speakora-sgdl.vercel.app/api/speaking/result", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

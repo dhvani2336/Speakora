@@ -141,11 +141,11 @@ router.post("/google-callback", async (req, res) => {
 
     // Redirect to Dashboard with User Data
     const userData = encodeURIComponent(JSON.stringify(user));
-    res.redirect(`http://localhost:5000/dashboard.html?user_data=${userData}`);
+    res.redirect(`https://speakora-one.vercel.app/dashboard.html?user_data=${userData}`);
 
   } catch (err) {
     console.error("Google Callback Error:", err);
-    res.redirect("http://localhost:5000/index.html?error=GoogleAuthFailed");
+    res.redirect("https://speakora-one.vercel.app/index.html?error=GoogleAuthFailed");
   }
 });
 
