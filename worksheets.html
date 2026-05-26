@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Worksheets | Speakora</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --secondary: #ec4899;
+            --easy: #10b981;
+            --medium: #f59e0b;
+            --hard: #ef4444;
+            --bg-body: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --glass: rgba(255, 255, 255, 0.85);
+            --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --premium-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --card-glass: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(255, 255, 255, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== Header ===== */
+        header {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            padding: 16px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 26px;
+            font-weight: 800;
+            color: #1e3a8a;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .nav-back {
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            color: var(--primary);
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .nav-back:hover {
+            background: #f9fafb;
+            transform: translateY(-1px);
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            padding: 60px 5% 40px;
+            text-align: center;
+            background: radial-gradient(circle at top right, #e0e7ff 0%, transparent 40%),
+                radial-gradient(circle at bottom left, #fae8ff 0%, transparent 40%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* ===== Controls ===== */
+        .controls-container {
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 0 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .level-tabs,
+        .filter-tabs {
+            display: flex;
+            background: white;
+            padding: 6px;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            border: none;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        /* ===== Worksheets Grid ===== */
+        .worksheets-grid {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .ws-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            position: relative;
+        }
+
+        .ws-card:hover {
+            transform: translateY(-8px);
+            background: white;
+            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.12);
+            border-color: var(--primary-light);
+        }
+
+        .ws-topic {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ws-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #1e1b4b;
+            line-height: 1.3;
+        }
+
+        .ws-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .ws-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .meta-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tag-easy {
+            background: #ecfdf5;
+            color: var(--easy);
+        }
+
+        .tag-medium {
+            background: #fffbeb;
+            color: var(--medium);
+        }
+
+        .tag-hard {
+            background: #fef2f2;
+            color: var(--hard);
+        }
+
+        .ws-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .ws-btn {
+            padding: 12px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .btn-view {
+            background: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        .btn-view:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-get {
+            background: var(--premium-gradient);
+            color: white;
+        }
+
+        .btn-get:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        /* ===== Modal ===== */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 850px;
+            max-height: 90vh;
+            border-radius: 32px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-header {
+            padding: 24px 40px;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .download-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .modal-body {
+            padding: 40px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #printableArea,
+            #printableArea * {
+                visibility: visible;
+            }
+
+            #printableArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        .worksheet-paper {
+            background: white;
+            color: black;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        .paper-header {
+            text-align: center;
+            border-bottom: 2px solid #000;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+        }
+
+        .question-item {
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+
+        .q-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .q-space {
+            border-bottom: 1px dashed #ccc;
+            height: 30px;
+            margin: 10px 0;
+        }
+
+        .answer-key {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px dashed #000;
+            page-break-before: always;
+        }
+
+        .key-item {
+            margin-bottom: 15px;
+        }
+
+        /* Daily Section */
+        .daily-banner {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 5%;
+        }
+
+        .daily-card {
+            background: var(--premium-gradient);
+            border-radius: 24px;
+            padding: 30px 40px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        .daily-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .daily-info p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .btn-daily {
+            background: white;
+            color: var(--primary);
+            padding: 14px 30px;
+            border-radius: 14px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .btn-daily:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .daily-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .tab-btn {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="assets/logo.png" alt="Speakora Logo">
+            Speakora
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1>Practice Worksheets</h1>
+        <p>Downloadable exercises for offline practice, grammar, vocabulary, and writing skills.</p>
+
+        <div class="controls-container">
+            <div class="level-tabs">
+                <button class="tab-btn active" onclick="filterByLevel('All', this)">
+                    <i class="fas fa-layer-group"></i> All Levels
+                </button>
+                <button class="tab-btn" onclick="filterByLevel('Beginner', this)">
+                    <i class="fas fa-seedling"></i> Beginner
+                </button>
+                <button class="tab-btn" onclick="filterByLevel('Intermediate', this)">
+                    <i class="fas fa-bolt"></i> Intermediate
+                </button>
+            </div>
+
+            <div class="filter-tabs">
+                <button class="tab-btn active" onclick="filterByTopic('All', this)">All Topics</button>
+                <button class="tab-btn" onclick="filterByTopic('Parts of Speech', this)">Parts of Speech</button>
+                <button class="tab-btn" onclick="filterByTopic('Tenses', this)">Tenses</button>
+                <button class="tab-btn" onclick="filterByTopic('Articles', this)">Articles</button>
+                <button class="tab-btn" onclick="filterByTopic('Active–Passive', this)">Active–Passive</button>
+                <button class="tab-btn" onclick="filterByTopic('Vocabulary', this)">Vocabulary</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="daily-banner">
+        <div class="daily-card">
+            <div class="daily-info">
+                <h2><i class="far fa-calendar-check"></i> Today’s Practice Sheet</h2>
+                <p>Mixed practice: 5 Grammar + 5 Vocab + 1 Writing exercise.</p>
+            </div>
+            <button class="btn-daily" onclick="generateDailySheet()">Get Today's Sheet</button>
+        </div>
+    </div>
+
+    <div id="loader" style="text-align: center; padding: 50px;">
+        <i class="fas fa-circle-notch fa-spin fa-3x" style="color: var(--primary);"></i>
+    </div>
+
+    <div class="worksheets-grid" id="wsGrid">
+        <!-- Worksheets injected here -->
+    </div>
+
+    <!-- Worksheet View Modal -->
+    <div class="modal" id="wsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Worksheet Preview</h2>
+                <div class="download-controls">
+                    <button class="icon-btn" onclick="window.print()" title="Print / Save as PDF">
+                        <i class="fas fa-print"></i>
+                    </button>
+                    <button class="icon-btn" onclick="closeModal()" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body" id="printableArea">
+                <div class="worksheet-paper">
+                    <!-- This part is injected by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allWorksheets = [];
+        let filteredLevel = 'All';
+        let filteredTopic = 'All';
+
+        async function fetchWorksheets() {
+            try {
+                const origins = ['', 'http://localhost:5000'];
+                let success = false;
+
+                for (const origin of origins) {
+                    try {
+                        const response = await fetch(`${origin}/api/worksheets`, {
+                            mode: origin ? 'cors' : 'same-origin'
+                        });
+                        if (response.ok) {
+                            allWorksheets = await response.json();
+                            success = true;
+                            console.log(`Worksheets loaded from ${origin || 'same origin'}`);
+                            break;
+                        }
+                    } catch (e) {
+                        continue;
+                    }
+                }
+
+                if (success) renderWorksheets();
+            } catch (err) {
+                console.error("Failed to fetch worksheets", err);
+            } finally {
+                document.getElementById('loader').style.display = 'none';
+            }
+        }
+
+        function renderWorksheets() {
+            const grid = document.getElementById('wsGrid');
+            grid.innerHTML = '';
+
+            const filtered = allWorksheets.filter(ws => {
+                const matchLevel = filteredLevel === 'All' || ws.level === filteredLevel;
+                const matchTopic = filteredTopic === 'All' || ws.topic === filteredTopic;
+                return matchLevel && matchTopic;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 50px; color: var(--text-muted);">
+                    <i class="fas fa-folder-open fa-3x" style="margin-bottom: 20px; opacity: 0.3;"></i>
+                    <p>No worksheets found for these filters.</p>
+                </div>`;
+                return;
+            }
+
+            filtered.forEach(ws => {
+                const card = document.createElement('div');
+                card.className = 'ws-card';
+                card.innerHTML = `
+                    <div class="ws-topic"><i class="fas fa-book"></i> ${ws.topic}</div>
+                    <div class="ws-title">${ws.title}</div>
+                    <div class="ws-desc">${ws.description}</div>
+                    <div class="ws-meta">
+                        <span class="meta-tag tag-${ws.difficulty.toLowerCase()}">
+                            <i class="fas fa-signal"></i> ${ws.difficulty}
+                        </span>
+                        <span class="meta-tag" style="background:#f1f5f9; color:#64748b">
+                            <i class="fas fa-layer-group"></i> ${ws.level}
+                        </span>
+                    </div>
+                    <div class="ws-actions">
+                        <button class="ws-btn btn-view" onclick="viewWorksheet('${ws._id}', false)">
+                            <i class="far fa-eye"></i> Preview
+                        </button>
+                        <button class="ws-btn btn-get" onclick="viewWorksheet('${ws._id}', true)">
+                            <i class="fas fa-download"></i> Get PDF
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterByLevel(level, btn) {
+            filteredLevel = level;
+            btn.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderWorksheets();
+        }
+
+        function filterByTopic(topic, btn) {
+            filteredTopic = topic;
+            btn.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderWorksheets();
+        }
+
+        async function viewWorksheet(id, autoPrint = false) {
+            const ws = allWorksheets.find(item => (item._id || item.id) == id);
+            if (!ws) {
+                console.error("Worksheet not found", id);
+                return;
+            }
+
+            const area = document.getElementById('printableArea');
+            area.innerHTML = `
+                <div class="worksheet-paper">
+                    <div class="paper-header" style="text-align: center; border-bottom: 3px solid #6366f1; padding-bottom: 20px; margin-bottom: 30px;">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px;">
+                            <img src="assets/logo.png" style="height: 60px; width: auto;">
+                            <span style="font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Speakora</span>
+                        </div>
+                        <h1 style="font-size: 2.2rem; margin: 10px 0; color: #1e1b4b;">${ws.title}</h1>
+                        <p style="text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 1px;">
+                            Topic: ${ws.topic} | Level: ${ws.level} | Difficulty: ${ws.difficulty}
+                        </p>
+                    </div>
+
+                    <div style="margin: 20px 0; border: 2px solid #e2e8f0; padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; background: #f8fafc;">
+                        <span><strong>Student Name:</strong> _____________________________</span>
+                        <span><strong>Date:</strong> __________________</span>
+                    </div>
+
+                    <div class="questions-list" style="margin-top: 30px;">
+                        ${ws.questions.map((q, idx) => `
+                            <div class="question-item" style="margin-bottom: 35px; page-break-inside: avoid;">
+                                <div class="q-text" style="font-size: 1.15rem; font-weight: 700; color: #1e1b4b; margin-bottom: 12px;">
+                                    ${idx + 1}. <span style="color: #6366f1; font-size: 0.85rem; text-transform: uppercase;">[${q.type}]</span> ${q.question}
+                                </div>
+                                ${renderQuestionInput(q)}
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="answer-key" style="margin-top: 60px; border-top: 3px dashed #6366f1; padding-top: 30px; page-break-before: always;">
+                        <h2 style="text-align: center; background: #6366f1; color: #fff; padding: 12px; border-radius: 10px; margin-bottom: 25px;">FULL ANSWER KEY & SOLUTIONS</h2>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+                            ${ws.questions.map((q, idx) => `
+                                <div class="key-item" style="padding: 15px; background: #f8fafc; border-radius: 10px; border-left: 5px solid #6366f1;">
+                                    <strong>Question ${idx + 1}:</strong> <span style="color: #059669; font-weight: 700;">${q.correctAnswer}</span>
+                                    <p style="font-size: 0.95rem; color: #475569; margin: 8px 0 0 0; line-height: 1.5;">
+                                        <strong>Explanation:</strong> ${q.explanation}
+                                    </p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 50px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 20px; color: #94a3b8; font-size: 0.9rem;">
+                        <p>© 2026 Speakora - The Ultimate Language Learning Platform</p>
+                        <p>Practice makes perfect. Visit us at www.speakora.com</p>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('wsModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            if (autoPrint) {
+                // Short delay to ensure images/fonts are ready
+                setTimeout(() => {
+                    window.print();
+                }, 800);
+            }
+        }
+
+        function renderQuestionInput(q) {
+            if (q.type === 'MCQ') {
+                return `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-left: 20px;">
+                        ${q.options.map((opt, i) => `<div style="padding: 5px;">${String.fromCharCode(65 + i)}) ${opt}</div>`).join('')}
+                    </div>
+                `;
+            } else if (q.type === 'Fill in the blanks' || q.type === 'Rewrite sentence' || q.type === 'Make sentence') {
+                return `<div style="border-bottom: 1px dashed #cbd5e1; height: 35px; margin: 10px 0 10px 25px; width: 80%;"></div>`;
+            } else if (q.type === 'Match the following') {
+                return `
+                    <div style="display: flex; justify-content: space-around; margin: 15px 0; border: 1px solid #e2e8f0; padding: 15px; border-radius: 10px;">
+                        <div style="line-height: 2;">${q.matchPairs.map((p, i) => `<div>${i + 1}. ${p.left}</div>`).join('')}</div>
+                        <div style="line-height: 2;">${q.matchPairs.map((p, i) => `<div>(${String.fromCharCode(65 + i)}) ${p.right}</div>`).join('')}</div>
+                    </div>
+                    <div style="margin-left: 25px; font-style: italic; color: #64748b;">Write answers here: ________ , ________ , ________ , ________</div>
+                `;
+            } else if (q.type === 'Short paragraph writing') {
+                return `
+                    <div style="margin: 10px 0 10px 25px;">
+                        <div style="border-bottom: 1px dashed #cbd5e1; height: 35px;"></div>
+                        <div style="border-bottom: 1px dashed #cbd5e1; height: 35px;"></div>
+                        <div style="border-bottom: 1px dashed #cbd5e1; height: 35px;"></div>
+                        <div style="border-bottom: 1px dashed #cbd5e1; height: 35px;"></div>
+                        <div style="border-bottom: 1px dashed #cbd5e1; height: 35px;"></div>
+                    </div>
+                `;
+            }
+            return `<div style="border-bottom: 1px dashed #cbd5e1; height: 35px; margin: 10px 0 10px 25px;"></div>`;
+        }
+
+        function generateDailySheet() {
+            // Pick random questions from all worksheets to create a mixed one
+            if (allWorksheets.length === 0) return;
+
+            const dailyWS = {
+                title: "Personalized Daily Practice Sheet",
+                topic: "Mixed Practice",
+                level: "Multi-level",
+                difficulty: "Medium",
+                questions: []
+            };
+
+            // Pick 1-2 random questions from various worksheets
+            const shuffled = [...allWorksheets].sort(() => 0.5 - Math.random());
+            shuffled.slice(0, 5).forEach(ws => {
+                if (ws.questions && ws.questions.length > 0) {
+                    const randomQ = ws.questions[Math.floor(Math.random() * ws.questions.length)];
+                    dailyWS.questions.push({
+                        ...randomQ,
+                        question: `(${ws.topic}) ${randomQ.question}`
+                    });
+                }
+            });
+
+            const area = document.getElementById('printableArea');
+            area.innerHTML = `
+                <div class="worksheet-paper">
+                    <div class="paper-header">
+                        <h1 style="color: #6366f1; font-size: 2rem;">Speakora Daily Practice</h1>
+                        <p style="text-transform: uppercase; font-weight: 700; color: #64748b; margin-top: 5px;">
+                            ${new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                        </p>
+                        <h2 style="margin-top: 15px;">Today's Mixed Challenge</h2>
+                    </div>
+
+                    <div style="margin-bottom: 30px; border: 1px solid #000; padding: 10px; display: flex; justify-content: space-between;">
+                        <span><strong>Name:</strong> _____________________________</span>
+                        <span><strong>Time:</strong> 20 Minutes</span>
+                    </div>
+
+                    <div class="questions-list">
+                        ${dailyWS.questions.map((q, idx) => `
+                            <div class="question-item">
+                                <div class="q-text">${idx + 1}. [${q.type}] ${q.question}</div>
+                                ${renderQuestionInput(q)}
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="answer-key">
+                        <h3 style="text-align: center; background: #000; color: #fff; padding: 10px; margin-bottom: 20px;">ANSWER KEY</h3>
+                        ${dailyWS.questions.map((q, idx) => `
+                            <div class="key-item">
+                                <strong>Q${idx + 1}:</strong> ${q.correctAnswer}
+                                <p style="font-size: 0.9rem; color: #666; margin-left: 20px;">
+                                    <em>Explanation: ${q.explanation}</em>
+                                </p>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div style="margin-top: 40px; text-align: center; font-size: 0.8rem; color: #aaa;">
+                        Generated on Speakora - Daily Practice System
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('wsModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('wsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('wsModal')) {
+                closeModal();
+            }
+        }
+
+        window.onload = fetchWorksheets;
+    </script>
+</body>
+
+</html>

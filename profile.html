@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile | Speakora</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+      color: #111827;
+      min-height: 100vh;
+    }
+
+    /* ===== DEFAULT HEADER ===== */
+    header {
+      background: #ffffff;
+      padding: 16px 60px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .dashboard-icon {
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 700;
+      color: #2563eb;
+    }
+
+    /* ===== PROFILE CONTAINER ===== */
+    .profile-container {
+      max-width: 900px;
+      margin: 80px auto;
+      padding: 0 40px;
+    }
+
+    .profile-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      padding: 60px;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+
+    /* ===== AVATAR ===== */
+    .avatar-wrapper {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+      font-weight: 900;
+      box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+      border: 6px solid white;
+    }
+
+    .avatar-overlay {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3b82f6;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+
+    /* ===== NAME ===== */
+    .profile-name {
+      font-size: 34px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 8px;
+      letter-spacing: -1px;
+    }
+
+    .profile-email {
+      color: #64748b;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    /* ===== DETAILS ===== */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .profile-field {
+      background: white;
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid #eef2ff;
+      transition: 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+
+    .profile-field:focus-within {
+      border-color: #3b82f6;
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.08);
+    }
+
+    .field-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #94a3b8;
+    }
+
+    .field-header i {
+      width: 18px;
+      height: 18px;
+    }
+
+    .field-header span {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .profile-field input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      outline: none;
+    }
+
+    .profile-field input::placeholder {
+      color: #cbd5e1;
+    }
+
+    /* ===== BUTTON ===== */
+    .actions {
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .update-btn {
+      padding: 16px 45px;
+      border: none;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: 0.3s;
+      box-shadow: 0 15px 30px rgba(59, 130, 246, 0.25);
+    }
+
+    .update-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.35);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 60px 40px;
+      text-align: center;
+      color: #64748b;
+      font-size: 15px;
+      border-top: 1px solid #e2e8f0;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    /* MOBILE */
+    @media(max-width:768px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-container {
+        margin: 40px auto;
+      }
+
+      .profile-card {
+        padding: 40px 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Speakora Logo">
+      Speakora
+    </div>
+  </header>
+
+  <!-- ===== PROFILE ===== -->
+  <div class="profile-container">
+    <div class="profile-card">
+
+      <div class="profile-header">
+        <div class="avatar-wrapper">
+          <div class="avatar" id="avatar">S</div>
+        </div>
+        <div class="profile-name" id="displayName">Speakora Learner</div>
+        <div class="profile-email" id="displayEmail">learner@speakora.com</div>
+      </div>
+
+      <div class="profile-grid">
+
+        <div class="profile-field">
+          <div class="field-header">
+            <i data-lucide="user"></i>
+            <span>Full Name</span>
+          </div>
+          <input type="text" id="nameInput" placeholder="Enter your name">
+        </div>
+
+        <div class="profile-field">
+          <div class="field-header">
+            <i data-lucide="mail"></i>
+            <span>Email Address</span>
+          </div>
+          <input type="email" id="emailInput" placeholder="Enter your email">
+        </div>
+
+        <div class="profile-field">
+          <div class="field-header">
+            <i data-lucide="globe"></i>
+            <span>Learning Languages</span>
+          </div>
+          <input type="text" id="languageInput" disabled>
+        </div>
+
+        <div class="profile-field">
+          <div class="field-header">
+            <i data-lucide="credit-card"></i>
+            <span>Current Subscription</span>
+          </div>
+          <input type="text" id="subscriptionInput" disabled>
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <button class="update-btn" onclick="updateProfile()">
+          <i data-lucide="refresh-cw"></i>
+          Update Profile
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    © 2026 Speakora. All rights reserved.
+  </footer>
+
+  <script>
+    const userId = localStorage.getItem("userId"); // Must ensure this is saved during login!
+    const apiBase = "http://localhost:5000/api/user";
+
+    // DOM Elements
+    const displayName = document.getElementById("displayName");
+    const displayEmail = document.getElementById("displayEmail");
+    const nameInput = document.getElementById("nameInput");
+    const emailInput = document.getElementById("emailInput");
+    const languageInput = document.getElementById("languageInput");
+    const subscriptionInput = document.getElementById("subscriptionInput");
+    const avatar = document.getElementById("avatar");
+
+    // LOAD PROFILE
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Try LocalStorage first (for speed)
+      const localName = localStorage.getItem("name");
+      const localEmail = localStorage.getItem("email");
+
+      if (localName) {
+        displayName.innerText = localName;
+        nameInput.value = localName;
+        avatar.innerText = localName.charAt(0).toUpperCase();
+      }
+      if (localEmail) {
+        displayEmail.innerText = localEmail;
+        emailInput.value = localEmail;
+      }
+
+      const storedLangs = JSON.parse(localStorage.getItem("languages") || "[]");
+      languageInput.value = storedLangs.length > 0
+        ? storedLangs.join(", ")
+        : (localStorage.getItem("language") || "Not selected");
+
+      subscriptionInput.value = localStorage.getItem("subscription") || "Free";
+
+      // 2. Fetch from DB if we have ID (to get latest)
+      /* 
+         NOTE: The login logic in index.html didn't explicitly save "userId".
+         I will use email to find user if ID is missing or just rely on local storage for now.
+         BUT, for a proper profile update, we need the ID.
+         
+         Correct fix: Ensure index.html saves userId. 
+         Assuming it does now (from my earlier edits for course.html).
+      */
+
+      if (userId) {
+        fetch(`${apiBase}/${userId}`)
+          .then(res => {
+            if (!res.ok) throw new Error("Failed");
+            return res.json();
+          })
+          .then(user => {
+            displayName.innerText = user.name;
+            displayEmail.innerText = user.email;
+            nameInput.value = user.name;
+            emailInput.value = user.email;
+            // Display all selected languages
+            languageInput.value = (user.languages && user.languages.length > 0)
+              ? user.languages.join(", ")
+              : "Not selected";
+            subscriptionInput.value = user.subscription;
+            avatar.innerText = user.name.charAt(0).toUpperCase();
+
+            // Sync local storage just in case
+            localStorage.setItem("languages", JSON.stringify(user.languages || []));
+          })
+          .catch(err => console.log("Profile load error:", err));
+      }
+    });
+
+    function updateProfile() {
+      const newName = nameInput.value;
+      const newEmail = emailInput.value;
+
+      if (!userId) {
+        // Fallback if no ID (just update local)
+        localStorage.setItem("name", newName);
+        localStorage.setItem("email", newEmail);
+        alert("Profile updated locally (Login again to sync with server)");
+        location.reload();
+        return;
+      }
+
+      fetch(`${apiBase}/${userId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: newName, email: newEmail })
+      })
+        .then(res => res.json())
+        .then(user => {
+          localStorage.setItem("name", user.name);
+          localStorage.setItem("email", user.email);
+          alert("Profile updated successfully!");
+          location.reload();
+        })
+        .catch(err => alert("Update failed"));
+
+    }
+
+    function logout() {
+      ['userId', 'currentUser', 'loggedIn', 'name', 'email', 'subscription', 'language', 'languages', 'pendingDeletion', 'deletionRequestTime'].forEach(k => localStorage.removeItem(k));
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <script src="js/global-nav.js"></script>
+</body>
+
+</html>

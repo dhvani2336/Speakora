@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Practice | Speakora</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4338ca;
+            --secondary: #db2777;
+            --bg: #f8fafc;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        header {
+            background: white;
+            padding: 16px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 26px;
+            font-weight: 800;
+            color: #1e3a8a;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .back-btn {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 10px 24px;
+            border-radius: 100px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* App Layout Support */
+        #app-layout {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: white;
+            border-radius: 20px;
+            padding: 20px 15px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+        }
+
+        .sidebar-section {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+
+        .sidebar-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text);
+            transition: all 0.2s;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-btn:hover {
+            background: #f1f5f9;
+        }
+
+        .sidebar-btn.active {
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(67, 56, 202, 0.3);
+        }
+
+        .main-content {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        @media (max-width: 768px) {
+            #app-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+        }
+
+        /* Level Selection Screen */
+        #level-select-view {
+            text-align: center;
+        }
+
+        .level-card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .level-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 20px;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border-color: var(--primary);
+        }
+
+        .level-card.easy:hover {
+            border-color: var(--success);
+        }
+
+        .level-card.medium:hover {
+            border-color: var(--warning);
+        }
+
+        .level-card.hard:hover {
+            border-color: var(--error);
+        }
+
+        .level-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .level-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .level-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Quiz View */
+        #quiz-view {
+            display: none;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .progress-indicator {
+            background: white;
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-weight: 700;
+            border: 1px solid var(--border);
+            color: var(--primary);
+        }
+
+        .mode-badge {
+            background: #eef2ff;
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid #c7d2fe;
+        }
+
+        .quiz-card {
+            background: white;
+            border-radius: 32px;
+            padding: 40px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .instruction-text {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Making Sentence Format */
+        .jumbled-words-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            min-height: 50px;
+        }
+
+        .jumbled-word {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #334155;
+            box-shadow: 0 2px 0 #cbd5e1;
+        }
+
+        .sentence-input {
+            width: 100%;
+            padding: 20px;
+            font-size: 20px;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            font-family: inherit;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s;
+            margin-bottom: 25px;
+            color: var(--text);
+        }
+
+        .sentence-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(67, 56, 202, 0.1);
+        }
+
+        /* Fill in Blanks Format */
+        .sentence-blank-text {
+            font-size: 26px;
+            line-height: 1.6;
+            font-weight: 700;
+            color: var(--text);
+            text-align: center;
+            margin: 20px 0 35px 0;
+            padding: 0 20px;
+        }
+
+        .blank-space {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 3px solid var(--primary);
+            padding: 0 10px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .options-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid var(--border);
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: #f8fafc;
+            transform: translateY(-2px);
+        }
+
+        .option-btn.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* General Buttons */
+        .action-container {
+            text-align: center;
+        }
+
+        .btn {
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3730a3;
+            transform: translateY(-2px);
+        }
+
+        .btn-next {
+            background: #10b981;
+            color: white;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .btn-next:hover {
+            background: #059669;
+        }
+
+        /* Feedback UI */
+        .feedback-box {
+            display: none;
+            margin-top: 25px;
+            padding: 24px;
+            border-radius: 16px;
+            text-align: left;
+            animation: slideUp 0.3s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-box.error {
+            background: #fef2f2;
+            border: 1px solid #fee2e2;
+        }
+
+        .feedback-box.success {
+            background: #f0fdf4;
+            border: 1px solid #dcfce7;
+        }
+
+        .feedback-title {
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+        }
+
+        .feedback-box.error .feedback-title {
+            color: var(--error);
+        }
+
+        .feedback-box.success .feedback-title {
+            color: var(--success);
+        }
+
+        .solution-text {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 12px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .explanation-text {
+            color: #475569;
+            font-size: 15px;
+            margin: 0;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        /* Score Screen */
+        #score-view {
+            display: none;
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 12px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 0 auto 40px auto;
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="assets/logo.png" alt="Speakora Logo">
+            Speakora
+        </div>
+        <div
+            style="font-weight: 700; color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 2px;">
+            Sentence Practice</div>
+        <a href="test.html" class="back-btn">← Back to Tests</a>
+    </header>
+
+    <div class="container">
+        <!-- Level Selection View -->
+        <div id="level-select-view">
+            <h1 style="font-size: 42px; font-weight: 800; margin-bottom: 15px;">Master Sentence Structures</h1>
+            <p style="color: var(--text-muted); font-size: 18px; max-width: 600px; margin: 0 auto;">Select a difficulty.
+                You will face 25 sentence formation challenges followed by 25 advanced fill in the blank tasks.</p>
+
+            <div class="level-card-grid">
+                <div class="level-card easy" onclick="startTest('easy')">
+                    <span class="level-icon">🌱</span>
+                    <h3 style="color: var(--success);">Easy</h3>
+                    <p>Basic grammar and core structures.</p>
+                </div>
+                <div class="level-card medium" onclick="startTest('medium')">
+                    <span class="level-icon">🚀</span>
+                    <h3 style="color: var(--warning);">Medium</h3>
+                    <p>Intermediate phrasing and clauses.</p>
+                </div>
+                <div class="level-card hard" onclick="startTest('hard')">
+                    <span class="level-icon">🧠</span>
+                    <h3 style="color: var(--error);">Hard</h3>
+                    <p>Strict formulations and advanced idioms.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Quiz View -->
+        <div id="app-layout" style="display: none;">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Challenges</div>
+                    <button class="sidebar-btn active" id="btn-making" onclick="selectSection('making')">1️⃣ Making
+                        Sentences</button>
+                    <button class="sidebar-btn" id="btn-blanks" onclick="selectSection('blanks')">2️⃣ Fill in the
+                        Blanks</button>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="main-content">
+                <div id="welcome-view"
+                    style="display: none; text-align: center; padding: 40px; background: white; border-radius: 32px; border: 1px solid var(--border);">
+                    <h2 style="font-size: 28px; margin-bottom: 10px;">Ready to begin?</h2>
+                    <p style="color: var(--text-muted); font-size: 16px;">Select a section from the sidebar to start
+                        your practice.</p>
+                </div>
+
+                <div id="quiz-view">
+                    <div class="quiz-header">
+                        <div>
+                            <span id="mode-indicator" class="mode-indicator">Loading Mode...</span>
+                        </div>
+                        <div class="progress-indicator">
+                            Question <span id="current-q-num">1</span> / <span id="total-q-num">50</span>
+                        </div>
+                    </div>
+
+                    <div class="quiz-card">
+                        <div id="making-sentence-block" style="display: none;">
+                            <div class="instruction-text">Arrange the following words to form a correct sentence:</div>
+                            <div class="jumbled-words-container" id="jumbled-container">
+                                <!-- Filled by JS -->
+                            </div>
+                            <input type="text" id="sentence-input" class="sentence-input"
+                                placeholder="Type the complete sentence here..." autocomplete="off">
+                        </div>
+
+                        <div id="fill-blanks-block" style="display: none;">
+                            <div class="instruction-text">Select the correct option to complete the sentence:</div>
+                            <div class="sentence-blank-text" id="blank-sentence-text">
+                                <!-- Filled by JS -->
+                            </div>
+                            <div class="options-grid" id="options-container">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+
+                        <div class="action-container">
+                            <button class="btn btn-primary" id="submit-btn" onclick="checkAnswer()">Submit
+                                Solution</button>
+                        </div>
+
+                        <div id="feedback-container"></div>
+
+                        <div class="action-container">
+                            <button class="btn btn-next" id="next-btn" onclick="nextQuestion()">Next Question →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Score View -->
+                <div id="score-view">
+                    <div class="quiz-card">
+                        <h2 style="font-size: 36px; margin: 0 0 40px 0;">Test Complete! 🎉</h2>
+
+                        <div class="score-circle">
+                            <div><span id="final-score">0</span><span
+                                    style="font-size: 24px; color: var(--text-muted);">/<span
+                                        id="final-total">0</span></span></div>
+                        </div>
+
+                        <p style="font-size: 18px; color: var(--text-muted); margin-bottom: 40px;" id="score-message">
+                            Great
+                            effort building those strict structures.</p>
+
+                        <div class="action-container">
+                            <button class="btn btn-primary" onclick="window.location.reload()">Start Over</button>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End Main Content -->
+        </div> <!-- End App Layout -->
+
+    </div>
+
+    <script>
+        let fullData = [];
+        let currentSectionType = 'making';
+        let quizData = [];
+        let currentIndex = 0;
+        let score = 0;
+        let selectedOption = null;
+
+        const API_URL = 'http://localhost:5000/api/sentence';
+
+        const viewSelect = document.getElementById('level-select-view');
+        const viewWelcome = document.getElementById('welcome-view');
+        const viewQuiz = document.getElementById('quiz-view');
+        const viewScore = document.getElementById('score-view');
+
+        const makingBlock = document.getElementById('making-sentence-block');
+        const blanksBlock = document.getElementById('fill-blanks-block');
+
+        const qNum = document.getElementById('current-q-num');
+        const tNum = document.getElementById('total-q-num');
+        const modeIndicator = document.getElementById('mode-indicator');
+        const feedbackContainer = document.getElementById('feedback-container');
+
+        const btnSubmit = document.getElementById('submit-btn');
+        const btnNext = document.getElementById('next-btn');
+
+        const sentenceInput = document.getElementById('sentence-input');
+
+        sentenceInput.addEventListener("keypress", function (event) {
+            if (event.key === "Enter" && btnSubmit.style.display !== 'none') {
+                checkAnswer();
+            } else if (event.key === "Enter" && btnNext.style.display === 'inline-block') {
+                nextQuestion();
+            }
+        });
+
+        async function startTest(level) {
+            try {
+                const response = await fetch(`${API_URL}?level=${level}`);
+                const data = await response.json();
+
+                if (!data || data.length === 0) {
+                    alert("Please run 'node seed_sentence.js' in your backend to generate data!");
+                    return;
+                }
+
+                fullData = data;
+
+                viewSelect.style.display = 'none';
+                document.getElementById('app-layout').style.display = 'flex';
+
+                // Select 1st part directly by default
+                selectSection('making');
+
+            } catch (error) {
+                console.error("Error fetching sentence data:", error);
+                alert("Failed to load backend data.");
+            }
+        }
+
+        function selectSection(type) {
+            currentSectionType = type;
+            document.getElementById('btn-making').classList.remove('active');
+            document.getElementById('btn-blanks').classList.remove('active');
+
+            if (type === 'making') {
+                document.getElementById('btn-making').classList.add('active');
+                quizData = fullData.filter(q => q.type === 'making_sentence');
+            } else {
+                document.getElementById('btn-blanks').classList.add('active');
+                quizData = fullData.filter(q => q.type === 'fill_blanks');
+            }
+
+            currentIndex = 0;
+            score = 0;
+            selectedOption = null;
+
+            viewWelcome.style.display = 'none';
+            viewScore.style.display = 'none';
+            viewQuiz.style.display = 'block';
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentItem = quizData[currentIndex];
+
+            qNum.innerText = currentIndex + 1;
+            tNum.innerText = quizData.length;
+
+            feedbackContainer.innerHTML = '';
+            btnSubmit.style.display = 'inline-block';
+            btnNext.style.display = 'none';
+            selectedOption = null;
+
+            if (currentItem.type === 'making_sentence') {
+                modeIndicator.innerText = "✍️ Form the Sentence";
+                modeIndicator.className = "mode-badge";
+                makingBlock.style.display = 'block';
+                blanksBlock.style.display = 'none';
+
+                // Setup jumbled words
+                const words = currentItem.question.split(' / ');
+                const container = document.getElementById('jumbled-container');
+                container.innerHTML = words.map(w => `<div class="jumbled-word">${w}</div>`).join('');
+
+                sentenceInput.value = '';
+                sentenceInput.disabled = false;
+
+                // Slight focus delay to allow render
+                setTimeout(() => sentenceInput.focus(), 50);
+
+            } else {
+                modeIndicator.innerText = "🧩 Fill the Blanks";
+                modeIndicator.className = "mode-badge";
+                makingBlock.style.display = 'none';
+                blanksBlock.style.display = 'block';
+
+                // Setup sentence blanks
+                const sentBase = currentItem.question.replace('____', '<span class="blank-space" id="visible-blank">____</span>');
+                document.getElementById('blank-sentence-text').innerHTML = sentBase;
+
+                // Setup options
+                const optsContainer = document.getElementById('options-container');
+                optsContainer.innerHTML = currentItem.options.map(opt =>
+                    `<button class="option-btn" onclick="selectOption('${opt}', this)">${opt}</button>`
+                ).join('');
+            }
+        }
+
+        function selectOption(val, btnEl) {
+            const currentItem = quizData[currentIndex];
+            if (btnSubmit.style.display === 'none') return; // test already submitted
+
+            selectedOption = val;
+
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btnEl.classList.add('selected');
+
+            document.getElementById('visible-blank').innerText = val;
+        }
+
+        function checkAnswer() {
+            const currentItem = quizData[currentIndex];
+            let isCorrect = false;
+
+            if (currentItem.type === 'making_sentence') {
+                const userAnswer = sentenceInput.value.trim();
+                if (!userAnswer) return alert("Please type a sentence.");
+
+                // Normalize evaluation (remove punctuation like . ! ? and trailing spaces, case insensitive)
+                const standardizedUser = userAnswer.replace(/[.,!?]/g, '').toLowerCase().trim();
+                const standardizedCorrect = currentItem.correctAnswer.replace(/[.,!?]/g, '').toLowerCase().trim();
+
+                isCorrect = (standardizedUser === standardizedCorrect);
+                sentenceInput.disabled = true;
+
+            } else {
+                if (!selectedOption) return alert("Please select an option!");
+                isCorrect = (selectedOption === currentItem.correctAnswer);
+                document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+            }
+
+            btnSubmit.style.display = 'none';
+            btnNext.style.display = 'inline-block';
+            showFeedback(isCorrect, currentItem);
+        }
+
+        function showFeedback(isCorrect, item) {
+            if (isCorrect) score++;
+
+            const fbClass = isCorrect ? 'success' : 'error';
+            const fbTitle = isCorrect ? '✅ Excellent Structure' : '❌ Incorrect Formation';
+
+            let html = `
+                <div class="feedback-box ${fbClass}" style="display:block;">
+                    <div class="feedback-title">${fbTitle}</div>
+            `;
+
+            if (!isCorrect) {
+                html += `
+                    <div class="solution-text">Solution: ${item.correctAnswer}</div>
+                `;
+            }
+
+            html += `
+                    <p class="explanation-text"><strong>Explanation:</strong> ${item.explanation}</p>
+                </div>
+            `;
+
+            feedbackContainer.innerHTML = html;
+            btnNext.focus();
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showScore();
+            }
+        }
+
+        function showScore() {
+            viewQuiz.style.display = 'none';
+            viewScore.style.display = 'block';
+
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('final-total').innerText = quizData.length;
+
+            const percentage = Math.round((score / quizData.length) * 100);
+
+            // NEW: Sync with Progress.html
+            const currentHighest = parseInt(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "highestScore_sentence") || "0");
+            if (percentage > currentHighest) {
+                localStorage.setItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "highestScore_sentence", percentage.toString());
+            }
+
+            if (window.SpeakoraActivity) {
+                SpeakoraActivity.log('test', `Scored <b>${percentage}%</b> on Sentence Building`, percentage, '#8b5cf6');
+            }
+
+            const messageEl = document.getElementById('score-message');
+
+            if (percentage >= 90) messageEl.innerText = "Grammar Master! Incredible sentence formations.";
+            else if (percentage >= 70) messageEl.innerText = "Great job! You have solid grammatical pacing.";
+            else messageEl.innerText = "Keep reviewing these structures. Practicing perfects fluency.";
+        }
+
+    </script>
+    <script src="js/activity-logger.js"></script>
+</body>
+
+</html>

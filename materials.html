@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Materials & Exercises | Speakora</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --secondary: #ec4899;
+      --bg-gradient: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+      --card-bg: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-gradient);
+      color: #1f2937;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: white;
+      padding: 16px 60px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .dashboard-icon {
+      text-decoration: none;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      color: var(--primary);
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .dashboard-icon:hover {
+      background: #f9fafb;
+    }
+
+    /* ===== MAIN ===== */
+    main {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 30px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .hero-text {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+      background: linear-gradient(to right, #1e40af, #3b82f6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 50px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title span {
+      background: #e0e7ff;
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* ===== MATERIAL CARDS ===== */
+    .materials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .loading-grid {
+      text-align: center;
+      padding: 40px;
+      grid-column: 1 / -1;
+      color: #6b7280;
+    }
+
+    .material-card {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      transition: 0.3s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .material-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+      border-color: #a5b4fc;
+    }
+
+    .card-icon {
+      font-size: 32px;
+      margin-bottom: 15px;
+      background: #f3f4f6;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 15px;
+    }
+
+    .material-card.exercise .card-icon {
+      background: #ecfdf5;
+      color: #10b981;
+    }
+
+    .material-card h3 {
+      color: #1f2937;
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .material-card p {
+      color: #6b7280;
+      font-size: 16px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .view-btn {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 12px;
+      background: #f3f4f6;
+      color: #4b5563;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.2s;
+      text-align: center;
+    }
+
+    .material-card:hover .view-btn {
+      background: var(--primary);
+      color: white;
+    }
+
+    .material-card.exercise:hover .view-btn {
+      background: #10b981;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      margin-top: 70px;
+      margin-bottom: 0 !important;
+      padding: 24px;
+      text-align: center;
+      font-size: 14px;
+      color: #6b7280;
+      border-top: 1px solid #e5e7eb;
+      background: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <script>
+    if (localStorage.getItem("loggedIn") !== "true") {
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Speakora Logo">
+      Speakora
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main>
+    <div class="hero-text">
+      <h1>Study Materials & Reference</h1>
+      <div class="subtitle">
+        Comprehensive resources to boost your learning. Access in-depth study guides, grammar notes, and reference
+        materials.
+      </div>
+    </div>
+
+    <!-- STATIC MATERIALS SECTION -->
+    <div class="section-title">
+      Study Guides <span>Reference</span>
+    </div>
+    <div class="materials-grid">
+      <div class="material-card" onclick="trackMaterial('grammar', 'grammar.html')">
+        <div class="card-icon">📘</div>
+        <h3>Grammar Notes</h3>
+        <p>Master the rules of the language with clear explanations and examples.</p>
+        <a class="view-btn">View Guide</a>
+      </div>
+
+      <div class="material-card" onclick="trackMaterial('vocab', 'vocabulary.html')">
+        <div class="card-icon">📗</div>
+        <h3>Vocabulary Lists</h3>
+        <p>Expand your word bank with topic-wise vocabulary lists.</p>
+        <a class="view-btn">View Lists</a>
+      </div>
+
+      <div class="material-card" onclick="trackMaterial('reading', 'reading.html')">
+        <div class="card-icon">📕</div>
+        <h3>Reading Passages</h3>
+        <p>Improve comprehension with interesting short stories and articles.</p>
+        <a class="view-btn">Read Now</a>
+      </div>
+
+      <div class="material-card" onclick="trackMaterial('worksheets', 'worksheets.html')">
+        <div class="card-icon">📝</div>
+        <h3>Practice Worksheets</h3>
+        <p>Downloadable exercises for offline practice and writing skills.</p>
+        <a class="view-btn">Get Worksheets</a>
+      </div>
+
+      <!-- New Static Cards to fill space -->
+      <div class="material-card" data-id="pronunciation" onclick="trackMaterial('pronunciation', 'pronunciation.html')">
+        <div class="card-icon">🗣️</div>
+        <h3>Pronunciation Lab</h3>
+        <p>Audio guides and charts to perfect your accent and pronunciation.</p>
+        <a class="view-btn">Try Now</a>
+      </div>
+
+      <div class="material-card" onclick="trackMaterial('tips', 'tips.html')">
+        <div class="card-icon">💡</div>
+        <h3>Tips & Tricks</h3>
+        <p>Smart strategies to learn faster and retain more information.</p>
+        <a class="view-btn">View Tips</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+
+
+  <script>
+    function trackMaterial(id, url) {
+      let completed = JSON.parse(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "completedMaterials") || "[]");
+      if (!completed.includes(id)) {
+        completed.push(id);
+        localStorage.setItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "completedMaterials", JSON.stringify(completed));
+      }
+
+      if (window.SpeakoraActivity) {
+        SpeakoraActivity.log('material', `Studied <b>${id.charAt(0).toUpperCase() + id.slice(1)}</b> Guide`, null, '#f59e0b');
+      }
+      location.href = url;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Show pronunciation score
+      const userId = localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous";
+      const pronScore = parseInt(localStorage.getItem(userId + "_highestScore_pronunciation") || "0");
+
+      if (pronScore > 0) {
+        const pronCard = document.querySelector('.material-card[data-id="pronunciation"]');
+        if (pronCard) {
+          const isCleared = pronScore >= 80;
+          const scoreHtml = `<div style="margin-bottom: 15px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: ${isCleared ? '#10b981' : '#64748b'};">
+               ${isCleared ? '✅ Highest' : '📝 Score'}: ${pronScore}%
+            </div>`;
+          const p = pronCard.querySelector('p');
+          p.insertAdjacentHTML('afterend', scoreHtml);
+
+          if (isCleared) {
+            pronCard.style.borderColor = '#10b981';
+            pronCard.style.background = '#f0fdf4';
+          }
+        }
+      }
+    });
+  </script>
+
+  <footer>
+    © 2026 Speakora. All rights reserved.
+  </footer>
+
+  <script src="js/activity-logger.js"></script>
+  <script src="js/global-nav.js"></script>
+</body>
+
+</html>

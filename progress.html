@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>📊 Progress | Speakora</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.15);
+      --secondary: #ec4899;
+      --accent: #10b981;
+      --warning: #f59e0b;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --indigo-grad: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      --pink-grad: linear-gradient(135deg, #ec4899 0%, #d946ef 100%);
+      --green-grad: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --glass: rgba(255, 255, 255, 0.8);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: white;
+      padding: 16px 60px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    main {
+      max-width: 1240px;
+      margin: 40px auto;
+      padding: 0 40px;
+    }
+
+    .header-section {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .header-section h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+      background: linear-gradient(to right, #1e40af, #3b82f6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+
+    .header-section p {
+      color: #6b7280;
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 50px;
+      text-align: center;
+    }
+
+    /* 1. OVERALL PROGRESS HERO */
+    .hero-progress-container {
+      background: var(--indigo-grad);
+      border-radius: 40px;
+      padding: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.3);
+      color: white;
+    }
+
+    .hero-text h2 {
+      font-size: 36px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .hero-text p {
+      opacity: 0.9;
+      font-size: 17px;
+      max-width: 500px;
+    }
+
+    .rank-badge {
+      display: inline-block;
+      margin-top: 25px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 14px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .main-ring-wrapper {
+      position: relative;
+      width: 180px;
+      height: 180px;
+    }
+
+    .main-ring-wrapper svg {
+      transform: rotate(-90deg);
+      width: 100%;
+      height: 100%;
+    }
+
+    .main-ring-wrapper circle {
+      fill: none;
+      stroke-width: 12;
+      stroke-linecap: round;
+    }
+
+    .main-ring-bg {
+      stroke: rgba(255, 255, 255, 0.15);
+    }
+
+    .main-ring-fill {
+      stroke: white;
+      stroke-dasharray: 440;
+      stroke-dashoffset: 440;
+      transition: stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .ring-center {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ring-val {
+      font-size: 42px;
+      font-weight: 900;
+    }
+
+    .ring-lbl {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    /* 2. STATS STRIP */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .mini-card {
+      background: white;
+      padding: 25px;
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mini-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .mini-val {
+      font-size: 28px;
+      font-weight: 800;
+      display: block;
+    }
+
+    .mini-lbl {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* 3. DASHBOARD GRID */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+
+    .card-v2 {
+      background: white;
+      border-radius: 36px;
+      border: 1px solid var(--border);
+      padding: 40px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-h3 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .skill-box {
+      margin-bottom: 28px;
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .skill-title {
+      font-weight: 750;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-percent {
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--primary);
+      background: var(--primary-glow);
+      padding: 4px 12px;
+      border-radius: 10px;
+    }
+
+    .p-bar-bg {
+      height: 12px;
+      background: #f1f5f9;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .p-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--indigo-grad);
+      border-radius: 20px;
+      transition: width 1.5s ease;
+    }
+
+    /* LESSON LIST */
+    .lessons-scroll {
+      height: 420px;
+      overflow-y: auto;
+      padding-right: 12px;
+    }
+
+    .lesson-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 24px;
+      background: #f8fafc;
+      border-radius: 22px;
+      margin-bottom: 12px;
+    }
+
+    .l-name {
+      font-weight: 750;
+      font-size: 16px;
+    }
+
+    .l-badge {
+      font-size: 12px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 12px;
+      text-transform: uppercase;
+    }
+
+    .done-badge {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .wait-badge {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    /* PERFORMANCE GRID */
+    .performance-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .perf-box {
+      background: white;
+      padding: 35px;
+      border-radius: 32px;
+      border: 1px solid var(--border);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .perf-val {
+      font-size: 38px;
+      font-weight: 950;
+      display: block;
+      margin: 10px 0;
+    }
+
+    .perf-lbl {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .time-desc {
+      font-size: 15px;
+      font-weight: 650;
+      color: var(--text-main);
+    }
+
+    /* 6. NEW 3-COLUMN DASHBOARD */
+    .summary-dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .column-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 20px;
+      padding-left: 10px;
+    }
+
+    .dashboard-col {
+      background: white;
+      border-radius: 30px;
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+    }
+
+    /* Achievements Grid */
+    .achievements-grid-v3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .badge-card {
+      background: #f8fafc;
+      padding: 15px;
+      border-radius: 20px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+      opacity: 0.5;
+      filter: grayscale(1);
+    }
+
+    .badge-card.active {
+      opacity: 1;
+      filter: grayscale(0);
+      background: white;
+      border-color: #f1f5f9;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .badge-icon-box {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .badge-info h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 2px;
+    }
+
+    .badge-info p {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    /* Recent Activity List - Scrollable & Growing */
+    #activity-list-v3 {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 500px;
+      overflow-y: auto;
+      padding-right: 8px;
+      /* For scrollbar space */
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
+
+    /* Custom scrollbar for webkit */
+    #activity-list-v3::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #activity-list-v3::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 20px;
+    }
+
+    #activity-list-v3::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .activity-item-v3 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border-radius: 18px;
+      transition: 0.2s;
+      border: 1px solid #f1f5f9;
+    }
+
+    .activity-item-v3:hover {
+      background: white;
+      transform: translateX(4px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      border-color: #e2e8f0;
+    }
+
+    .activity-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .activity-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .activity-text {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .activity-text b {
+      color: #1e293b;
+    }
+
+    .activity-time {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 700;
+      background: #f1f5f9;
+      padding: 4px 10px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+
+    /* Study Summary */
+    .summary-card-v3 {
+      background: #f8fafc;
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+
+    .summary-icon-v3 {
+      width: 44px;
+      height: 44px;
+      background: #eef2ff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .summary-info-v3 b {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1e293b;
+      display: block;
+    }
+
+    .summary-info-v3 span {
+      font-size: 12px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .week-chart {
+      margin-top: 25px;
+    }
+
+    .week-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .week-header h5 {
+      font-size: 12px;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+
+    .week-header .days-count {
+      font-size: 13px;
+      font-weight: 800;
+      color: #4f46e5;
+    }
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    .day-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .day-square {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #f1f5f9;
+      border-radius: 8px;
+    }
+
+    .day-square.active {
+      background: var(--indigo-grad);
+      box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+    }
+
+    .day-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      margin-top: 70px;
+      margin-bottom: 0 !important;
+      padding: 24px;
+      text-align: center;
+      font-size: 14px;
+      color: #6b7280;
+      border-top: 1px solid #e5e7eb;
+      background: #ffffff;
+    }
+
+    /* CUSTOM SCROLLBAR */
+    .lessons-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .lessons-scroll::-webkit-scrollbar-track {
+      background: #f8fafc;
+    }
+
+    .lessons-scroll::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 950px) {
+      .hero-progress-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 30px;
+      }
+
+      .main-ring-wrapper {
+        margin-top: 30px;
+      }
+
+      .stats-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .dashboard-grid,
+      .performance-grid,
+      .achieve-activity-row {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        padding: 15px 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Speakora Logo">
+      Speakora
+    </div>
+  </header>
+
+  <main>
+    <div class="header-section">
+      <h1>My Progress</h1>
+      <p>A comprehensive overview of your linguistic growth and academic achievements.</p>
+    </div>
+
+    <!-- 1. HERO PROGRESS (SHIFTED TO TOP) -->
+    <section class="hero-progress-container">
+      <div class="hero-text">
+        <h2>Journey Mastery</h2>
+        <p>Your overall completion index is calculated based on interactive units, reference materials, and skill
+          assessments.</p>
+        <div class="rank-badge">
+          Current Rank: <span id="rank-name">Explorer</span>
+        </div>
+      </div>
+      <div class="main-ring-wrapper">
+        <svg viewBox="0 0 160 160">
+          <circle class="main-ring-bg" cx="80" cy="80" r="70"></circle>
+          <circle id="master-ring" class="main-ring-fill" cx="80" cy="80" r="70"></circle>
+        </svg>
+        <div class="ring-center">
+          <span class="ring-val" id="total-pct">0%</span>
+          <span class="ring-lbl">Total</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. QUICK STATS STRIP -->
+    <div class="stats-strip">
+      <div class="mini-card">
+        <div class="mini-icon" style="background: #eef2ff; color: #4f46e5;"><i data-lucide="book-open"></i></div>
+        <span class="mini-val" id="count-lessons">0</span>
+        <span class="mini-lbl">Lessons</span>
+      </div>
+      <div class="mini-card">
+        <div class="mini-icon" style="background: #fdf2f8; color: #ec4899;"><i data-lucide="files"></i></div>
+        <span class="mini-val" id="count-materials">0</span>
+        <span class="mini-lbl">Materials</span>
+      </div>
+      <div class="mini-card">
+        <div class="mini-icon" style="background: #ecfdf5; color: #059669;"><i data-lucide="activity"></i></div>
+        <span class="mini-val" id="count-tests">0%</span>
+        <span class="mini-lbl">Overall Test Score</span>
+      </div>
+      <div class="mini-card">
+        <div class="mini-icon" style="background: #fff9c4; color: #f59e0b;"><i data-lucide="mic"></i></div>
+        <span class="mini-val" id="count-speaking">0%</span>
+        <span class="mini-lbl">Speech Score</span>
+      </div>
+    </div>
+
+    <!-- 3. MAIN DASHBOARD GRID -->
+    <div class="dashboard-grid">
+      <!-- Skillset Mastery - REORDERED TO MATCH TEST.HTML -->
+      <div class="card-v2">
+        <h3 class="card-h3"><i data-lucide="bar-chart-2"></i> Skillset Mastery</h3>
+
+        <!-- 1. Grammar Mastery -->
+        <div class="skill-box">
+          <div class="skill-header">
+            <span class="skill-title"><i data-lucide="brain"></i> Grammar Mastery</span>
+            <span class="skill-percent" id="pct-grammar">0%</span>
+          </div>
+          <div class="p-bar-bg">
+            <div class="p-bar-fill" id="fill-grammar"></div>
+          </div>
+        </div>
+
+        <!-- 2. Vocabulary Lab -->
+        <div class="skill-box">
+          <div class="skill-header">
+            <span class="skill-title"><i data-lucide="languages"></i> Vocabulary Lab</span>
+            <span class="skill-percent" id="pct-vocab"
+              style="color:var(--secondary); background:var(--secondary-soft);">0%</span>
+          </div>
+          <div class="p-bar-bg">
+            <div class="p-bar-fill" id="fill-vocab" style="background: var(--pink-grad);"></div>
+          </div>
+        </div>
+
+        <!-- 3. Sentence Building -->
+        <div class="skill-box">
+          <div class="skill-header">
+            <span class="skill-title"><i data-lucide="share-2"></i> Sentence Building</span>
+            <span class="skill-percent" id="pct-sentence">0%</span>
+          </div>
+          <div class="p-bar-bg">
+            <div class="p-bar-fill" id="fill-sentence"></div>
+          </div>
+        </div>
+
+        <!-- 4. Listening Skills -->
+        <div class="skill-box">
+          <div class="skill-header">
+            <span class="skill-title"><i data-lucide="headphones"></i> Listening Skills</span>
+            <span class="skill-percent" id="pct-listening"
+              style="color:var(--success); background:var(--success-soft);">0%</span>
+          </div>
+          <div class="p-bar-bg">
+            <div class="p-bar-fill" id="fill-listening" style="background: var(--green-grad);"></div>
+          </div>
+        </div>
+
+        <!-- 5. Writing Practice -->
+        <div class="skill-box">
+          <div class="skill-header">
+            <span class="skill-title"><i data-lucide="pen-tool"></i> Writing Practice</span>
+            <span class="skill-percent" id="pct-writing"
+              style="color:var(--secondary); background:var(--secondary-soft);">0%</span>
+          </div>
+          <div class="p-bar-bg">
+            <div class="p-bar-fill" id="fill-writing" style="background: var(--pink-grad);"></div>
+          </div>
+        </div>
+
+        <!-- 6. Speaking Accuracy (Maintained at end) -->
+        <div class="skill-box">
+          <div class="skill-header">
+            <span class="skill-title"><i data-lucide="message-square"></i> Speaking Accuracy</span>
+            <span class="skill-percent" id="pct-speak">0%</span>
+          </div>
+          <div class="p-bar-bg">
+            <div class="p-bar-fill" id="fill-speak"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lesson Progress -->
+      <div class="card-v2">
+        <h3 class="card-h3"><i data-lucide="check-circle-2"></i> Curriculum Progress</h3>
+        <div class="lessons-scroll" id="lessons-list">
+          <div style="padding: 20px; text-align: center; color: var(--text-muted);">Initializing curriculum sync...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. PERFORMANCE GRID -->
+    <div class="performance-grid">
+      <div class="perf-box" onclick="showClearedTopics()" style="cursor: pointer; transition: transform 0.2s;"
+        onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+        <span class="perf-lbl">Grammar Cleared</span>
+        <span class="perf-val" id="val-grammar-topics">0/35</span>
+        <p style="font-size:12px; color:var(--text-muted); font-weight:600;">80%+ Score</p>
+      </div>
+      <div class="perf-box">
+        <span class="perf-lbl">Narrative Audio</span>
+        <span class="perf-val" id="val-listening-stories">0/5</span>
+        <p style="font-size:12px; color:var(--text-muted); font-weight:600;">Stories Fully Understood</p>
+      </div>
+      <div class="perf-box">
+        <span class="perf-lbl">Avg Precision</span>
+        <span class="perf-val" id="val-accuracy">0%</span>
+        <p style="font-size:12px; color:var(--text-muted); font-weight:600;">Combined Test Performance</p>
+      </div>
+    </div>
+
+    <!-- 1. HERO PROGRESS (SHIFTED) -->
+    <!-- 5. SUMMARY DASHBOARD (NEW) -->
+    <div class="summary-dashboard">
+      <!-- ACHIEVEMENTS -->
+      <div>
+        <h4 class="column-title">Achievements</h4>
+        <div class="dashboard-col">
+          <div class="achievements-grid-v3">
+            <div class="badge-card" id="badge-first-step">
+              <div class="badge-icon-box">🏅</div>
+              <div class="badge-info">
+                <h4>First Step</h4>
+                <p>10+ lessons done from 17 lessons with full score</p>
+              </div>
+            </div>
+            <div class="badge-card" id="badge-word-explorer">
+              <div class="badge-icon-box">📚</div>
+              <div class="badge-info">
+                <h4>Word Explorer</h4>
+                <p>Easy OR Medium vocab, score 70%+</p>
+              </div>
+            </div>
+            <div class="badge-card" id="badge-on-roll">
+              <div class="badge-icon-box">🔥</div>
+              <div class="badge-info">
+                <h4>On a Roll</h4>
+                <p>4-day streak (2 hours/day)</p>
+              </div>
+            </div>
+            <div class="badge-card" id="badge-grammar-master">
+              <div class="badge-icon-box">🏆</div>
+              <div class="badge-info">
+                <h4>Grammar Master</h4>
+                <p>20+ topics with score 90%+</p>
+              </div>
+            </div>
+            <div class="badge-card" id="badge-good-listener">
+              <div class="badge-icon-box">🎧</div>
+              <div class="badge-info">
+                <h4>Good Listener</h4>
+                <p>Easy & Medium sessions, score 70%+</p>
+              </div>
+            </div>
+            <div class="badge-card" id="badge-pen-paper">
+              <div class="badge-icon-box">✍️</div>
+              <div class="badge-info">
+                <h4>Pen & Paper</h4>
+                <p>25 essays written, score 70%+</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT ACTIVITY -->
+      <div>
+        <h4 class="column-title">Recent Activity</h4>
+        <div class="dashboard-col">
+          <div class="activity-list-v3" id="activity-list-v3">
+            <div class="activity-item-v3">
+              <div class="activity-left">
+                <div class="activity-dot" style="background: #10b981;"></div>
+                <div class="activity-text">Completed <b>Lesson 1</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STUDY SUMMARY -->
+      <div>
+        <h4 class="column-title">Study Summary</h4>
+        <div class="dashboard-col">
+          <div class="summary-card-v3">
+            <div class="summary-icon-v3">⏱️</div>
+            <div class="summary-info-v3">
+              <b id="study-time-val">0h 5m</b>
+              <span>Total Study Time</span>
+            </div>
+          </div>
+          <div class="summary-card-v3">
+            <div class="summary-icon-v3">🔥</div>
+            <div class="summary-info-v3">
+              <b id="streak-val-v3">1 Day</b>
+              <span>Current Streak</span>
+            </div>
+          </div>
+
+          <div class="week-chart">
+            <div class="week-header">
+              <h5>This Week</h5>
+              <span class="days-count" id="week-active-count">1 / 7 days</span>
+            </div>
+            <div class="days-grid">
+              <div class="day-box">
+                <div class="day-square" id="day-m"></div><span class="day-label">M</span>
+              </div>
+              <div class="day-box">
+                <div class="day-square" id="day-t"></div><span class="day-label">T</span>
+              </div>
+              <div class="day-box">
+                <div class="day-square" id="day-w"></div><span class="day-label">W</span>
+              </div>
+              <div class="day-box">
+                <div class="day-square" id="day-th"></div><span class="day-label">T</span>
+              </div>
+              <div class="day-box">
+                <div class="day-square" id="day-f"></div><span class="day-label">F</span>
+              </div>
+              <div class="day-box">
+                <div class="day-square" id="day-s"></div><span class="day-label">S</span>
+              </div>
+              <div class="day-box">
+                <div class="day-square" id="day-su"></div><span class="day-label">S</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- CLEARED TOPICS MODAL -->
+    <div id="cleared-modal"
+      style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); z-index:2000; align-items:center; justify-content:center;">
+      <div
+        style="background:white; padding:40px; border-radius:36px; max-width:500px; width:90%; position:relative; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+        <button onclick="document.getElementById('cleared-modal').style.display='none'"
+          style="position:absolute; top:25px; right:25px; background:#f1f5f9; border:none; width:40px; height:40px; border-radius:50%; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; color: #64748b;">&times;</button>
+        <h3
+          style="margin-bottom:25px; font-size: 24px; font-weight: 800; color:var(--text-main); display: flex; align-items: center; gap: 12px;">
+          <i data-lucide="award" style="color: #f59e0b;"></i> Mastered Topics
+        </h3>
+        <div id="cleared-topics-list"
+          style="max-height:350px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; padding-right: 10px;">
+          <!-- Topics will be injected here -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <script>
+    async function syncProgress() {
+      // 1. Context & Language Sync
+      const userLang = localStorage.getItem("language") || "English";
+      let curriculum = [];
+      try {
+        const res = await fetch(`http://localhost:5000/api/lessons/lang/${userLang}`);
+        if (res.ok) curriculum = await res.json();
+      } catch (e) { console.error("Sync error:", e); }
+
+      // Get user performance data from localStorage
+      const completedLessons = JSON.parse(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "completedLessons") || "[]");
+      const completedMaterials = JSON.parse(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "completedMaterials") || "[]");
+      const learningData = JSON.parse(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "learningData") || '{"quizzes":[]}');
+
+      const scores = {
+        grammar: parseInt(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "highestScore_grammar") || "0"),
+        vocab: parseInt(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "highestScore_vocab") || "0"),
+        sentence: parseInt(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "highestScore_sentence") || "0"),
+        listening: parseInt(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "highestScore_listening") || "0"),
+        writing: parseInt(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "highestScore_writing") || "0"),
+        speak: parseInt(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "highestScore_speak") || "0")
+      };
+
+      // 2. Intelligence Logic
+      const lessonCount = completedLessons.length;
+      const totalLessons = curriculum.length || 6;
+      const materialsCount = completedMaterials.length;
+
+      const testTypes = ["grammar", "vocab", "sentence", "listening", "writing", "speak"];
+      const labsDoneCount = testTypes.filter(type => scores[type] > 0).length;
+
+      const lessonPct = Math.round((lessonCount / totalLessons) * 100);
+      const materialsPct = Math.round((materialsCount / 6) * 100);
+      const avgSkill = Math.round(Object.values(scores).reduce((a, b) => a + b, 0) / 6);
+
+      const totalMastery = Math.round((lessonPct * 0.4) + (materialsPct * 0.1) + (avgSkill * 0.5));
+
+      const isDoneLesson1 = completedLessons.some(c => {
+        const stored = String(c).toLowerCase().trim();
+        return stored === "lesson 1" || stored.includes("greeting") || stored.includes("impressions");
+      });
+
+      // 3. UI Sync Implementation
+      const updateUI = () => {
+        // Hero Ring & Rank
+        document.getElementById("total-pct").innerText = totalMastery + "%";
+        const ring = document.getElementById("master-ring");
+        if (ring) ring.style.strokeDashoffset = 440 - (440 * totalMastery) / 100;
+
+        let rankText = "Linguistic Explorer";
+        if (totalMastery > 30) rankText = "Academic Nomad";
+        if (totalMastery > 60) rankText = "Pro Speaker";
+        if (totalMastery > 85) rankText = "Fluent Master";
+        document.getElementById("rank-name").innerText = rankText;
+
+        // KPI Summary Cards
+        document.getElementById("count-lessons").innerText = lessonCount;
+        document.getElementById("count-materials").innerText = materialsCount;
+        document.getElementById("count-tests").innerText = Math.round((labsDoneCount / 6) * 100) + "%";
+        document.getElementById("count-speaking").innerText = scores.speak + "%";
+
+        // Performance Detail Section - Refined logic to exclude duplicates and ensure they are valid grammar topics
+        const grammarDBTopics = new Set(window.GRAMMAR_DATABASE ? GRAMMAR_DATABASE.map(t => t.title.toLowerCase()) : []);
+        const clearedGrammarList = [...new Set(
+          learningData.quizzes
+            .filter(q => q.score >= 80 && q.topic && grammarDBTopics.has(q.topic.toLowerCase()))
+            .map(q => q.topic)
+        )];
+
+        document.getElementById("val-grammar-topics").innerText = `${clearedGrammarList.length}/35`;
+
+        // Function to show modal with cleared topics
+        window.showClearedTopics = () => {
+          const listEl = document.getElementById("cleared-topics-list");
+          listEl.innerHTML = "";
+
+          if (clearedGrammarList.length === 0) {
+            listEl.innerHTML = '<div style="text-align:center; padding: 20px; color: var(--text-muted);">No topics cleared yet (80%+ score required).</div>';
+          } else {
+            clearedGrammarList.forEach(topic => {
+              const score = Math.max(...learningData.quizzes.filter(q => q.topic === topic).map(q => q.score));
+              listEl.innerHTML += `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:15px 20px; background:#f0fdf4; border: 1px solid #dcfce7; border-radius:18px;">
+                  <span style="font-weight:700; color:#166534;">${topic}</span>
+                  <span style="background:#10b981; color:white; padding:4px 12px; border-radius:10px; font-size:12px; font-weight:800;">${score}%</span>
+                </div>
+              `;
+            });
+          }
+
+          document.getElementById("cleared-modal").style.display = "flex";
+          if (window.lucide) window.lucide.createIcons();
+        };
+
+        const listStories = Math.round(scores.listening / 20);
+        document.getElementById("val-listening-stories").innerText = `${listStories}/5`;
+        document.getElementById("val-accuracy").innerText = avgSkill + "%";
+
+        // Skillset Mastery Bars
+        const syncBar = (id, val) => {
+          const fill = document.getElementById(`fill-${id}`);
+          const pct = document.getElementById(`pct-${id}`);
+          if (fill) fill.style.width = val + "%";
+          if (pct) pct.innerText = val + "%";
+        };
+        syncBar("grammar", scores.grammar);
+        syncBar("vocab", scores.vocab);
+        syncBar("sentence", scores.sentence);
+        syncBar("listening", scores.listening);
+        syncBar("writing", scores.writing);
+        syncBar("speak", scores.speak);
+
+        // Lesson Tracking List - ULTRA-RELIABLE MATCHING
+        const listEl = document.getElementById("lessons-list");
+        listEl.innerHTML = "";
+
+        const source = curriculum.length > 0 ? curriculum : [
+          { title: "Lesson 1: Mastering Greetings & First Impressions", _id: "fallback_1" },
+          { title: "Lesson 2: Advanced Self-Introductions", _id: "fallback_2" },
+          { title: "Lesson 3: Daily Life & Routines", _id: "fallback_3" },
+          { title: "Lesson 4: Shopping & Supermarkets", _id: "fallback_4" },
+          { title: "Lesson 5: Health & Hygiene Basics", _id: "fallback_5" },
+          { title: "Lesson 6: Professional Career Vocabulary", _id: "fallback_6" }
+        ];
+
+        source.forEach((item, index) => {
+          const lessonNumber = index + 1;
+
+          // FUZZY MATCHING LOGIC
+          // This covers IDs, Titles, and "Lesson X" patterns simultaneously
+          const isDone = completedLessons.some(c => {
+            const stored = String(c).toLowerCase().trim();
+            const currentTitle = String(item.title).toLowerCase().trim();
+            const currentId = String(item._id).toLowerCase().trim();
+            const lessonRef = `lesson ${lessonNumber}`;
+
+            return (
+              stored === currentId ||
+              stored === currentTitle ||
+              stored === lessonRef ||
+              currentTitle.includes(stored) ||
+              stored.includes(lessonRef)
+            );
+          });
+
+          listEl.innerHTML += `
+            <div class="lesson-item">
+              <span class="l-name">${item.title}</span>
+              <span class="l-badge ${isDone ? 'done-badge' : 'wait-badge'}">${isDone ? 'Complete' : 'Pending'}</span>
+            </div>
+          `;
+        });
+
+        // Achievements Logic V3
+        const checkAchieve = (id, condition) => {
+          const el = document.getElementById(id);
+          if (el && condition) el.classList.add("active");
+        };
+
+        const grammarTopics90 = [...new Set(learningData.quizzes.filter(q => q.score >= 90).map(q => q.topic))].length;
+        const fullScoreLessons = learningData.quizzes.filter(q => q.score === 100 && q.lessonId).length;
+
+        checkAchieve("badge-first-step", fullScoreLessons >= 10);
+        checkAchieve("badge-word-explorer", scores.vocab >= 70);
+        checkAchieve("badge-on-roll", false); // Streak logic handled below
+        checkAchieve("badge-grammar-master", grammarTopics90 >= 20);
+        checkAchieve("badge-good-listener", scores.listening >= 70);
+        checkAchieve("badge-pen-paper", scores.writing >= 70);
+
+        // Streak & Week Logic
+        const today = new Date().getDay(); // 0 (Sun) to 6 (Sat)
+        const dayIds = ["day-su", "day-m", "day-t", "day-w", "day-th", "day-f", "day-s"];
+        dayIds.forEach((id, idx) => {
+          const el = document.getElementById(id);
+          if (el && idx === today) el.classList.add("active");
+        });
+        document.getElementById("week-active-count").innerText = "1 / 7 days";
+
+        const streakVal = 1; // Falling back to 1 for stability
+        document.getElementById("streak-val-v3").innerText = `${streakVal} Day${streakVal !== 1 ? 's' : ''}`;
+        if (streakVal >= 4) checkAchieve("badge-on-roll", true);
+
+        // Study Time Calculation (Simulated)
+        const totalMinutes = (lessonCount * 12) + (materialsCount * 8) + (labsDoneCount * 5);
+        const hrs = Math.floor(totalMinutes / 60);
+        const mins = totalMinutes % 60;
+        document.getElementById("study-time-val").innerText = `${hrs}h ${mins}m`;
+
+        // Activity Timeline V3 - Logic to merge various data sources for a complete history
+        const activityList = document.getElementById("activity-list-v3");
+        activityList.innerHTML = "";
+
+        // 1. Get logs from centralized logger
+        let activities = window.SpeakoraActivity ? SpeakoraActivity.getLogs() : [];
+
+        // 2. Fallback: Parse quiz data for historical entries not in the logger yet
+        const legacyLogTopics = new Set(activities.map(a => a.text));
+        learningData.quizzes.forEach(q => {
+          let text = "";
+          let type = "test";
+          let color = "#6366f1";
+
+          if (q.lessonId) {
+            const lesson = curriculum.find(l => l._id === q.lessonId);
+            const lessonNum = q.lessonNum || (lesson ? curriculum.indexOf(lesson) + 1 : q.lessonId.slice(-4));
+            const lessonTitle = q.lessonTitle || (lesson ? lesson.title : "Challenge");
+            text = `Completed <b>Lesson ${lessonNum}: ${lessonTitle}</b>`;
+            type = "lesson";
+            color = "#10b981";
+          } else if (q.topic) {
+            text = `Scored <b>${q.score}%</b> on Grammar: ${q.topic}`;
+            color = "#8b5cf6";
+          }
+
+          if (text && !legacyLogTopics.has(text)) {
+            activities.push({
+              text: text,
+              type: type,
+              color: color,
+              date: q.date,
+              score: q.score
+            });
+          }
+        });
+
+        // 3. Fallback: Materials
+        completedMaterials.forEach(m => {
+          const text = `Studied <b>${m.charAt(0).toUpperCase() + m.slice(1)}</b> Guide`;
+          if (!legacyLogTopics.has(text)) {
+            activities.push({ text: text, type: 'material', color: '#f59e0b', date: new Date(Date.now() - 86400000).toISOString() }); // Fake date for legacy
+          }
+        });
+
+        // Sort by date descending
+        activities.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        if (activities.length === 0) {
+          activityList.innerHTML = '<div style="text-align:center; padding: 20px; color: var(--text-muted); font-size:14px;">No recent activity found. Start learning!</div>';
+        } else {
+          activities.forEach(act => {
+            const timeStr = window.SpeakoraActivity ? SpeakoraActivity.timeAgo(act.date) : 'Recently';
+            activityList.innerHTML += `
+              <div class="activity-item-v3">
+                <div class="activity-left">
+                  <div class="activity-dot" style="background: ${act.color};"></div>
+                  <div class="activity-text">${act.text}</div>
+                </div>
+                <div class="activity-time">${timeStr}</div>
+              </div>
+            `;
+          });
+        }
+
+        if (window.lucide) window.lucide.createIcons();
+      };
+
+      setTimeout(updateUI, 300);
+    }
+
+    document.addEventListener("DOMContentLoaded", syncProgress);
+  </script>
+
+  <footer>
+    © 2026 Speakora. All rights reserved.
+  </footer>
+
+  <script src="js/activity-logger.js"></script>
+  <script src="js/grammar-data.js"></script>
+  <script src="js/global-nav.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,279 @@
+[
+    {
+        "id": 1,
+        "sequence": 1,
+        "level": "Level 1",
+        "title": "Alphabet & Pronunciation",
+        "definition": "The foundation of English begins with 26 letters, 5 vowels (A, E, I, O, U) and 21 consonants.",
+        "purpose": "To master the sounds and spelling rules required for reading and speaking.",
+        "rules": [
+            "Vowel sounds are open; consonant sounds involve blocking air.",
+            "Short vowels appear in CVC words (Cat, Pen).",
+            "Long vowels often use the 'Silent E' rule (Cake, Time).",
+            "C can be hard (Cat) or soft (City).",
+            "G can be hard (Go) or soft (Gentle)."
+        ],
+        "types": [
+            {
+                "name": "Vowels",
+                "description": "A, E, I, O, U",
+                "examples": [
+                    "Apple",
+                    "Egg",
+                    "Ice",
+                    "Old",
+                    "Up"
+                ]
+            },
+            {
+                "name": "Consonants",
+                "description": "All other 21 letters",
+                "examples": [
+                    "Bat",
+                    "Cup",
+                    "Dog"
+                ]
+            }
+        ],
+        "structures": [
+            {
+                "pattern": "CVC Rule",
+                "explanation": "Consonant-Vowel-Consonant usually produces a short vowel sound."
+            },
+            {
+                "pattern": "CVC+e Rule",
+                "explanation": "Adding an 'e' makes the first vowel long (e.g., Hat -> Hate)."
+            }
+        ],
+        "examples": [
+            {
+                "sentence": "The quick brown fox jumps over the lazy dog.",
+                "meaning": "A pangram containing all letters.",
+                "type": "Positive"
+            }
+        ],
+        "commonMistakes": [
+            {
+                "wrong": "Pronouncing 'k' in 'Knife'",
+                "correct": "Silent 'k' (Nife)",
+                "reason": "K followed by N at the start is silent."
+            }
+        ],
+        "summary": "Alphabets are the building blocks; pronunciation is their music.",
+        "practice": [
+            "Speak: Thorough, Thought, Though, Through.",
+            "Identify vowels in: Rhythm."
+        ]
+    },
+    {
+        "id": 2,
+        "sequence": 2,
+        "level": "Level 1",
+        "title": "Parts of Speech",
+        "definition": "Categories that describe the role a word plays in a sentence.",
+        "purpose": "To understand how different words function together to create meaning.",
+        "rules": [
+            "Every word belongs to at least one of 8 parts of speech.",
+            "A word can change its part of speech based on context (e.g., 'Book' can be a noun or a verb)."
+        ],
+        "types": [
+            {
+                "name": "The 8 Categories",
+                "description": "Noun, Pronoun, Verb, Adjective, Adverb, Preposition, Conjunction, Interjection",
+                "examples": [
+                    "See following sections for details."
+                ]
+            }
+        ],
+        "summary": "Parts of speech are the 'jobs' words do in a sentence.",
+        "practice": [
+            "Label the words: 'The happy dog runs quickly.'"
+        ]
+    },
+    {
+        "id": 3,
+        "sequence": 3,
+        "level": "Level 1",
+        "title": "Noun",
+        "definition": "A noun names a person, place, thing, or idea.",
+        "purpose": "To identify the subject or object of an action.",
+        "rules": [
+            "Proper nouns must be capitalized.",
+            "Common nouns are general names.",
+            "Abstract nouns represent untouchable concepts (like wisdom)."
+        ],
+        "types": [
+            {
+                "name": "Proper",
+                "description": "Specific names",
+                "examples": [
+                    "Delhi",
+                    "Google",
+                    "Alice"
+                ]
+            },
+            {
+                "name": "Common",
+                "description": "General names",
+                "examples": [
+                    "City",
+                    "Company",
+                    "Girl"
+                ]
+            },
+            {
+                "name": "Collective",
+                "description": "Groups",
+                "examples": [
+                    "Team",
+                    "Army",
+                    "Flock"
+                ]
+            },
+            {
+                "name": "Abstract",
+                "description": "Ideas/Qualities",
+                "examples": [
+                    "Love",
+                    "Bravery",
+                    "Time"
+                ]
+            },
+            {
+                "name": "Material",
+                "description": "Substances",
+                "examples": [
+                    "Gold",
+                    "Water",
+                    "Wood"
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "sentence": "Honesty is the best policy.",
+                "meaning": "Abstract noun usage",
+                "type": "Positive"
+            },
+            {
+                "sentence": "My team won the match.",
+                "meaning": "Collective noun usage",
+                "type": "Positive"
+            }
+        ],
+        "commonMistakes": [
+            {
+                "wrong": "He lives in london.",
+                "correct": "He lives in London.",
+                "reason": "Capitalization for proper nouns."
+            }
+        ],
+        "summary": "Nouns are the names of everything we see and feel.",
+        "practice": [
+            "Underline nouns: 'Success requires hard work.'"
+        ]
+    },
+    {
+        "id": 19,
+        "sequence": 19,
+        "level": "Level 2",
+        "title": "Tenses (MOST IMPORTANT)",
+        "definition": "Tense indicates the time of an action or state of being.",
+        "purpose": "To accurately convey when an event is happening.",
+        "rules": [
+            "Present: Happening now.",
+            "Past: Already happened.",
+            "Future: Will happen later."
+        ],
+        "types": [
+            {
+                "name": "Present Simple",
+                "description": "Habits and general truths.",
+                "examples": [
+                    "I eat."
+                ]
+            },
+            {
+                "name": "Present Continuous",
+                "description": "Action happening now.",
+                "examples": [
+                    "I am eating."
+                ]
+            },
+            {
+                "name": "Present Perfect",
+                "description": "Completed recently with relevance now.",
+                "examples": [
+                    "I have eaten."
+                ]
+            },
+            {
+                "name": "Present Perfect Continuous",
+                "description": "Started in past and continuing.",
+                "examples": [
+                    "I have been eating."
+                ]
+            },
+            {
+                "name": "Past Simple",
+                "description": "Finished action.",
+                "examples": [
+                    "I ate."
+                ]
+            },
+            {
+                "name": "Past Continuous",
+                "description": "Ongoing in the past.",
+                "examples": [
+                    "I was eating."
+                ]
+            },
+            {
+                "name": "Past Perfect",
+                "description": "Finished before another past action.",
+                "examples": [
+                    "I had eaten."
+                ]
+            },
+            {
+                "name": "Past Perfect Continuous",
+                "description": "Continued up to a point in the past.",
+                "examples": [
+                    "I had been eating."
+                ]
+            },
+            {
+                "name": "Future Simple",
+                "description": "Will happen.",
+                "examples": [
+                    "I will eat."
+                ]
+            },
+            {
+                "name": "Future Continuous",
+                "description": "Will be ongoing.",
+                "examples": [
+                    "I will be eating."
+                ]
+            },
+            {
+                "name": "Future Perfect",
+                "description": "Will be finished by a future point.",
+                "examples": [
+                    "I will have eaten."
+                ]
+            },
+            {
+                "name": "Future Perfect Continuous",
+                "description": "Will be ongoing up to a future point.",
+                "examples": [
+                    "I will have been eating."
+                ]
+            }
+        ],
+        "summary": "Tenses are the most critical part of English grammar for clarity of time.",
+        "practice": [
+            "Convert 'I eat' into all 12 tenses."
+        ]
+    }
+]

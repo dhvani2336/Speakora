@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Speakora | Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --secondary: #ec4899;
+      --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      --text-main: #1f2937;
+      --text-light: #6b7280;
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.8);
+      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
+      --shadow-hover: 0 20px 40px rgba(79, 70, 229, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 16px 60px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .register-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .login-split {
+      display: flex;
+      width: 100%;
+      max-width: 1000px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      min-height: 600px;
+    }
+
+    /* Left Branding Panel */
+    .login-branding {
+      flex: 1;
+      background: linear-gradient(135deg, #4f46e5, #c026d3);
+      padding: 50px 40px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .login-branding::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 250px;
+      height: 250px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .login-branding::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      right: -80px;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .branding-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .branding-content h1 {
+      font-size: 38px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    .branding-content p {
+      font-size: 16px;
+      opacity: 0.9;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      color: #e0e7ff;
+    }
+
+    .feature-list {
+      list-style: none;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 15px;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 16px;
+      border-radius: 12px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Right Form Panel */
+    .container {
+      flex: 1;
+      padding: 50px 40px;
+      background: white;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .container h2 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+    }
+
+    .container p {
+      font-size: 15px;
+      color: var(--text-light);
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #9ca3af;
+      pointer-events: none;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 16px 14px 45px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      background: #f9fafb;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+      background: white;
+    }
+
+    .error {
+      text-align: left;
+      font-size: 13px;
+      color: #dc2626;
+      margin-bottom: 10px;
+      margin-top: -8px;
+      padding-left: 10px;
+      display: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+    }
+
+    .login-link {
+      margin-top: 24px;
+      font-size: 15px;
+      color: var(--text-main);
+    }
+
+    .login-link a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+
+    .login-link a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: transparent;
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .login-split {
+        flex-direction: column;
+      }
+
+      .login-branding {
+        padding: 40px 30px;
+        text-align: center;
+      }
+
+      .feature-list li {
+        justify-content: center;
+      }
+
+      .container {
+        padding: 40px 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="home.html" class="logo">
+      <img src="assets/logo.png" alt="Speakora Logo">
+      Speakora
+    </a>
+  </header>
+
+  <div class="register-wrapper">
+    <div class="login-split">
+      <!-- Left Branding Panel -->
+      <div class="login-branding">
+        <div class="branding-content">
+          <h1>Join Speakora Today</h1>
+          <p>Create your free account and discover a structured, premium approach to language fluency.</p>
+          <ul class="feature-list">
+            <li><span>📘</span> Structured, ad-free study materials</li>
+            <li><span>🎓</span> Formal Certification & Analytics</li>
+            <li><span>🎤</span> Intelligent AI Conversation Tutor</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right Form Panel -->
+      <div class="container">
+        <h2>Create Account</h2>
+        <p>Start your language learning journey.</p>
+
+        <form>
+          <div class="input-group">
+            <span class="input-icon">👤</span>
+            <input id="u" placeholder="Username">
+          </div>
+          <div class="error" id="e1">Username required</div>
+
+          <div class="input-group">
+            <span class="input-icon">📝</span>
+            <input id="n" placeholder="Full Name">
+          </div>
+          <div class="error" id="e2">Full name required</div>
+
+          <div class="input-group">
+            <span class="input-icon">✉️</span>
+            <input id="m" placeholder="Email Address">
+          </div>
+          <div class="error" id="e3">Valid email required</div>
+
+          <div class="input-group">
+            <span class="input-icon">📱</span>
+            <input id="p" placeholder="Phone Number (10 digits)">
+          </div>
+          <div class="error" id="e4">Phone must be 10 digits</div>
+
+          <div class="input-group">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="pw" placeholder="Password (min 8 chars)">
+          </div>
+          <div class="error" id="e5">Password must be 8 characters</div>
+
+          <div class="input-group">
+            <span class="input-icon">🔐</span>
+            <input type="password" id="cpw" placeholder="Confirm Password">
+          </div>
+          <div class="error" id="e6">Passwords do not match</div>
+
+          <button type="button" onclick="registerUser()">Sign Up</button>
+        </form>
+
+        <p class="login-link">
+          Already have an account? <a href="index.html">Sign In</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2026 Speakora. All rights reserved.</footer>
+
+  <script>
+    function hide() {
+      document.querySelectorAll(".error").forEach(e => e.style.display = "none");
+    }
+
+    function registerUser() {
+      hide();
+
+      const u = document.getElementById("u").value.trim();
+      const n = document.getElementById("n").value.trim();
+      const m = document.getElementById("m").value.trim();
+      const p = document.getElementById("p").value.trim();
+      const pw = document.getElementById("pw").value;
+      const cpw = document.getElementById("cpw").value;
+
+      let ok = true;
+
+      if (!u) { e1.style.display = "block"; ok = false; }
+      if (!n) { e2.style.display = "block"; ok = false; }
+      if (!m || !m.includes("@")) { e3.style.display = "block"; ok = false; }
+      if (!/^\d{10}$/.test(p)) { e4.style.display = "block"; ok = false; }
+      if (pw.length < 8) { e5.style.display = "block"; ok = false; }
+      if (pw !== cpw) { e6.style.display = "block"; ok = false; }
+
+      if (!ok) return;
+
+      fetch("http://localhost:5000/api/user/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: u,
+          name: n,
+          email: m,
+          phone: p,
+          password: pw
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.message === "User already exists") {
+            alert("User already exists. Please login.");
+          } else {
+            alert("Registered successfully");
+            window.location.href = "index.html";
+          }
+        })
+        .catch(() => {
+          alert("Server error. Try again later.");
+        });
+    }
+  </script>
+
+  <script src="js/global-nav.js"></script>
+</body>
+
+</html>

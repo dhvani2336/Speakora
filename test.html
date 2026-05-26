@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Practice | Speakora</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Outfit", sans-serif;
+      background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+      color: #111827;
+      min-height: 100vh;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: white;
+      padding: 16px 60px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    /* dashboard arrow */
+    .dashboard-icon {
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 700;
+      color: #2563eb;
+    }
+
+    /* ===== MAIN ===== */
+    main {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 30px;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+      background: linear-gradient(to right, #1e40af, #3b82f6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+
+    .subtext {
+      color: #6b7280;
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 50px;
+      text-align: center;
+    }
+
+    .hero-text {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    /* ===== PRACTICE GRID ===== */
+    .practice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+
+    .practice-card {
+      background: white;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      transition: 0.25s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .practice-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .practice-card h3 {
+      margin: 0 0 12px;
+      color: #1e3a8a;
+    }
+
+    .practice-card p {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 22px;
+    }
+
+    /* badge */
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: #e0e7ff;
+      color: #1e3a8a;
+      margin-bottom: 14px;
+      width: max-content;
+    }
+
+    /* start button */
+    .start-btn {
+      margin-top: auto;
+      padding: 11px;
+      border-radius: 12px;
+      background: #22c55e;
+      color: white;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.25s;
+    }
+
+    .start-btn:hover {
+      background: #16a34a;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      margin-top: 80px;
+      padding: 24px;
+      text-align: center;
+      font-size: 14px;
+      color: #6b7280;
+      border-top: 1px solid #e5e7eb;
+      background: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Speakora Logo">
+      Speakora
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main>
+    <div class="hero-text">
+      <h1>Practice & Tests</h1>
+      <div class="subtext">
+        Strengthen your language skills through interactive practice tests designed to improve grammar, vocabulary, and
+        real-life usage.
+      </div>
+    </div>
+    <!--  -->
+    <div class="practice-grid">
+
+      <div class="practice-card" onclick="location.href='grammar-practice.html'">
+        <div class="badge">Grammar Mastery</div>
+        <h3>Grammar Practice</h3>
+        <p>
+          Master grammar rules topic-wise and take targeted exercises to test your skills.
+        </p>
+        <div class="start-btn">Start Practice</div>
+      </div>
+
+      <div class="practice-card" onclick="location.href='vocab-test.html'">
+        <div class="badge">Vocabulary</div>
+        <h3>Word Practice</h3>
+        <p>
+          Improve your vocabulary by selecting correct meanings and word usage.
+        </p>
+        <div class="start-btn">Start Test</div>
+      </div>
+
+      <div class="practice-card" onclick="location.href='sentence-test.html'">
+        <div class="badge">Sentence Building</div>
+        <h3>Form Sentences</h3>
+        <p>
+          Practice sentence construction to improve fluency and structure.
+        </p>
+        <div class="start-btn">Start Test</div>
+      </div>
+
+      <div class="practice-card" onclick="location.href='listening-test.html'">
+        <div class="badge">Listening</div>
+        <h3>Listening Skills</h3>
+        <p>
+          Listen carefully and answer questions based on audio content.
+        </p>
+        <div class="start-btn">Start Test</div>
+      </div>
+
+      <div class="practice-card" onclick="location.href='writing-test.html'">
+        <div class="badge">Writing</div>
+        <h3>Writing Practice</h3>
+        <p>
+          Improve writing skills through guided and open-ended responses.
+        </p>
+        <div class="start-btn">Start Test</div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    © 2026 Speakora. All rights reserved.
+  </footer>
+
+  <script src="js/global-nav.js"></script>
+</body>
+
+</html>

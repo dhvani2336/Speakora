@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Start Learning | Speakora</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Using 'Outfit' font for a modern, friendly look -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --secondary: #ec4899;
+      --accent: #8b5cf6;
+      --bg-gradient: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+      --card-bg: #ffffff;
+      --text-main: #1f2937;
+      --text-light: #6b7280;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: white;
+      padding: 16px 60px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .home-btn {
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary);
+      background: #eef2ff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      transition: 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .home-btn:hover {
+      background: #e0e7ff;
+      transform: translateY(-2px);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    main {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+      flex: 1;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .hero-text {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #1e40af, #7c3aed);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .subtext {
+      color: var(--text-light);
+      font-size: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ===== LESSON GRID ===== */
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 30px;
+      padding-bottom: 60px;
+    }
+
+    .lesson-card {
+      background: white;
+      border-radius: 24px;
+      padding: 35px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lesson-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(79, 70, 229, 0.15);
+      border-color: #a5b4fc;
+    }
+
+    /* Card Decoration */
+    .card-bg-icon {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      font-size: 140px;
+      opacity: 0.05;
+      transform: rotate(15deg);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .lesson-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #e0e7ff, #f5f3ff);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .lesson-level {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #8b5cf6;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .lesson-card h3 {
+      font-size: 24px;
+      margin: 0 0 12px;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .lesson-card p {
+      color: var(--text-light);
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0 0 25px 0;
+      flex-grow: 1;
+    }
+
+    /* Progress & Button */
+    .bottom-section {
+      margin-top: auto;
+    }
+
+    .progress-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: #f3f4f6;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #10b981;
+      width: 0%;
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    .start-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--primary);
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      transition: 0.2s;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .lesson-card:hover .start-btn {
+      background: #4338ca;
+      transform: scale(1.02);
+    }
+
+    .lesson-card.completed .start-btn {
+      background: #ecfdf5;
+      color: #059669;
+    }
+
+    /* Completed Checkmark */
+    .completed-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #ecfdf5;
+      color: #059669;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Loading/Error States */
+    .msg-box {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      margin-top: 70px;
+      margin-bottom: 0 !important;
+      padding: 24px;
+      text-align: center;
+      font-size: 14px;
+      color: #6b7280;
+      border-top: 1px solid #e5e7eb;
+      background: #ffffff;
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 32px;
+      }
+
+      .lesson-card {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Speakora Logo">
+      Speakora
+    </div>
+  </header>
+
+  <main>
+    <div class="hero-text">
+      <h1 id="page-title">Ready to Learn? 🎧</h1>
+      <div class="subtext">
+        Listen to stories, learn new words, and improve your English the easy way.
+      </div>
+    </div>
+
+    <div class="lessons-grid" id="lessons-container">
+      <div class="msg-box">
+        <h2 style="color:var(--text-light)">Loading your lessons... ⏳</h2>
+      </div>
+    </div>
+  </main>
+
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const container = document.getElementById("lessons-container");
+      const pageTitle = document.getElementById("page-title");
+      const lang = localStorage.getItem("language") || "English";
+
+      pageTitle.innerText = `Learn ${lang} the Easy Way 🎧`;
+
+      try {
+        // Fetch lessons
+        const res = await fetch(`http://localhost:5000/api/lessons/lang/${lang}`);
+
+        if (!res.ok) throw new Error("Could not connect to server");
+
+        const lessons = await res.json();
+
+        // Safely parse completed lessons to prevent localStorage corruption from crashing the page
+        let completed = [];
+        try {
+          const storageKey = (localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_completedLessons";
+          const storageData = localStorage.getItem(storageKey);
+          if (storageData) {
+            completed = JSON.parse(storageData);
+          }
+        } catch (e) {
+          console.warn("Could not parse completed lessons from localStorage", e);
+          completed = [];
+        }
+
+        if (lessons.length === 0) {
+          container.innerHTML = `
+            <div class="msg-box">
+              <h2>No lessons found yet 😕</h2>
+              <p>Please check back later!</p>
+            </div>`;
+          return;
+        }
+
+        container.innerHTML = lessons.map(lesson => {
+          const isDone = completed.includes(lesson._id);
+
+          // Get score from learningData
+          const learningData = JSON.parse(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_learningData") || '{"quizzes":[]}');
+          const lessonQuizzes = learningData.quizzes.filter(q => q.lessonId === lesson._id);
+          const highestScore = lessonQuizzes.length > 0 ? Math.max(...lessonQuizzes.map(q => q.score)) : 0;
+          const hasScore = highestScore > 0;
+
+          // Simple logic to pick an icon based on title or random
+          const icons = ["📖", "🔥", "💡", "🚀", "🌟", "🎯"];
+          const icon = icons[Math.floor(Math.random() * icons.length)];
+
+          const descriptionFull = lesson.description || "";
+          const descriptionFormatted = descriptionFull.replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
+
+          const isCleared = highestScore >= 90;
+
+          return `
+            <div class="lesson-card ${isDone ? 'completed' : ''}" onclick="location.href='lesson-view.html?id=${lesson._id}'" style="position: relative; padding-bottom: 60px;">
+              
+              <div class="card-bg-icon">${icon}</div>
+              
+              ${isDone ? `
+              <div class="completed-badge" style="background: ${isCleared ? '#ecfdf5' : '#f1f5f9'}; color: ${isCleared ? '#059669' : '#64748b'};">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                ${isCleared ? 'Mastered' : 'Done'}
+              </div>` : ''}
+
+              <div class="lesson-icon">${icon}</div>
+              
+              <span class="lesson-level">${lesson.level} LEVEL</span>
+              <h3>${lesson.title}</h3>
+              <p>${descriptionFormatted}</p>
+              
+              <div class="bottom-section">
+                ${hasScore ? `
+                <div style="position: absolute; bottom: 25px; left: 35px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: ${isCleared ? '#10b981' : '#64748b'};">
+                   ${isCleared ? 'Highest' : 'Score'}: ${highestScore}%
+                </div>` : ''}
+                <div class="progress-container">
+                   <span>Progress</span>
+                   <div class="progress-bar">
+                      <div class="progress-fill" style="width: ${isDone ? '100%' : '0%'}"></div>
+                   </div>
+                </div>
+                
+                <button class="start-btn">
+                  ${isDone ? 'Review Lesson ↺' : 'Start Learning ▶'}
+                </button>
+              </div>
+
+            </div>
+          `;
+        }).join("");
+
+        // Add "Coming Soon" card
+        container.innerHTML += `
+            <div class="lesson-card" style="opacity: 0.7; cursor: default; border-style: dashed;">
+              <div class="lesson-icon">🚧</div>
+              <span class="lesson-level">COMING SOON</span>
+              <h3>More Lessons</h3>
+              <p>We are creating new stories for you. Stay tuned!</p>
+              <div class="bottom-section">
+                 <button class="start-btn" style="background: #e5e7eb; color: #9ca3af; cursor: not-allowed;">
+                    Locked 🔒
+                 </button>
+              </div>
+            </div>
+        `;
+
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = `
+          <div class="msg-box">
+            <h2 style="color: #ef4444;">Oops! Something went wrong ⚠️</h2>
+            <p>We couldn't load your lessons. Please check your connection.</p>
+          </div>`;
+      }
+    });
+  </script>
+
+  <footer>
+    © 2026 Speakora. All rights reserved.
+  </footer>
+
+  <script src="js/global-nav.js"></script>
+</body>
+
+</html>

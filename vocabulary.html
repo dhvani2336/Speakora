@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vocabulary Lists | Speakora</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4338ca;
+            --secondary: #db2777;
+            --accent: #059669;
+            --bg: #fcfdfe;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --border: #e2e8f0;
+            --glass: rgba(255, 255, 255, 0.75);
+        }
+
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 16px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 26px;
+            font-weight: 800;
+            color: #1e3a8a;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .back-btn {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 10px 24px;
+            border-radius: 100px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 40px 100px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 40px;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: calc(100vh - 140px);
+            overflow-y: auto;
+            padding-right: 15px;
+            scrollbar-width: thin;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        .sidebar-card {
+            background: white;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-card h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--primary);
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            font-weight: 800;
+        }
+
+        .category-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: var(--text-muted);
+            border-radius: 16px;
+            transition: 0.2s;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            gap: 12px;
+        }
+
+        .category-link i {
+            font-style: normal;
+            font-size: 18px;
+        }
+
+        .category-link:hover {
+            background: #f1f5f9;
+            color: var(--text);
+            transform: translateX(4px);
+        }
+
+        .category-link.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(67, 56, 202, 0.25);
+        }
+
+        /* SEARCH BOX */
+        .search-box {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 24px 18px 54px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: white;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 500;
+            outline: none;
+            transition: 0.3s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(67, 56, 202, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            opacity: 0.4;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            background: white;
+            border-radius: 32px;
+            padding: 60px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            min-height: 800px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .topic-header {
+            margin-bottom: 48px;
+        }
+
+        .topic-header h2 {
+            font-size: 42px;
+            margin: 0 0 12px;
+            color: #0f172a;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .topic-header p {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* VOCAB CARDS */
+        .vocab-list {
+            display: grid;
+            gap: 30px;
+        }
+
+        .word-card {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .word-card:hover {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .word-card::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 6px;
+            background: var(--primary);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .word-card:hover::after {
+            opacity: 1;
+        }
+
+        .word-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .word-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.5px;
+        }
+
+        .word-phonetic {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            color: var(--primary);
+            background: #eef2ff;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-weight: 700;
+        }
+
+        .word-meaning {
+            font-size: 18px;
+            color: #334155;
+            margin-bottom: 12px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .word-hindi {
+            font-size: 18px;
+            color: #d946ef;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .word-details {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .detail-item {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 8px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .detail-item.syn {
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #dcfce7;
+        }
+
+        .detail-item.ant {
+            background: #fff1f2;
+            color: #e11d48;
+            border: 1px solid #ffe4e6;
+        }
+
+        .example-box {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .example-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .example-item {
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: #475569;
+            display: flex;
+            gap: 12px;
+            font-weight: 500;
+        }
+
+        .example-item::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        footer {
+            text-align: center;
+            padding: 80px 20px;
+            background: white;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* MASTER GUIDE STYLES */
+        .guide-section {
+            margin-bottom: 50px;
+        }
+
+        .guide-box {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            margin-top: 20px;
+        }
+
+        .check-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .check-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .check-list li::before {
+            content: '✔';
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .guide-card {
+            background: white;
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .guide-card h4 {
+            margin: 0 0 10px;
+            color: var(--primary);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .word-pill-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .word-pill {
+            background: #f1f5f9;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .comparison-table th {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .error-box {
+            background: #fef2f2;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #fee2e2;
+            margin-top: 15px;
+        }
+
+        .step-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 25px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .step-item {
+            min-width: 150px;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+        }
+
+        .step-num {
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .summary-ribbon {
+            background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 24px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                padding: 32px;
+                border-radius: 24px;
+            }
+
+            .topic-header h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="assets/logo.png" alt="Speakora Logo">
+            Speakora
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-card">
+                <h3>Quick Search</h3>
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" id="wordSearch" placeholder="Find a word..."
+                        onkeyup="searchWords(this.value)">
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h3>Word Categories</h3>
+                <div id="category-list">
+                    <!-- Categories will be populated by JS -->
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content" id="vocabulary-view">
+            <div id="loading">Select a category to explore vocabulary.</div>
+        </main>
+    </div>
+
+    <footer>
+        &copy; 2026 Speakora Academy. All rights reserved.
+    </footer>
+
+    <script src="js/vocabulary-data.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const categoryList = document.getElementById("category-list");
+
+            // Populate Categories
+            VOCABULARY_DATABASE.forEach(cat => {
+                const link = document.createElement("a");
+                link.href = "#";
+                link.className = "category-link";
+                link.innerHTML = `<i>${cat.icon}</i> ${cat.category}`;
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll(".category-link").forEach(l => l.classList.remove("active"));
+                    link.classList.add("active");
+                    renderCategory(cat);
+                };
+                categoryList.appendChild(link);
+            });
+
+            // Load first category by default
+            if (categoryList.firstChild) categoryList.firstChild.click();
+        });
+
+        function renderCategory(cat) {
+            const view = document.getElementById("vocabulary-view");
+
+            if (cat.isGuide) {
+                renderMasterGuide(cat, view);
+                return;
+            }
+
+            let html = `
+                <div class="topic-header">
+                    <h2><i>${cat.icon}</i> ${cat.category}</h2>
+                    <p>${cat.description}</p>
+                </div>
+                <div class="vocab-list">
+                    ${cat.words.map(w => renderWordCard(w)).join('')}
+                </div>
+            `;
+            view.innerHTML = html;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderMasterGuide(cat, container) {
+            const g = cat.content;
+            let html = `
+                <div class="topic-header">
+                    <span style="background: var(--primary); color: white; padding: 4px 12px; border-radius: 100px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Expert Guide</span>
+                    <h2 style="margin-top: 15px;"><i>${cat.icon}</i> WHAT IS VOCABULARY?</h2>
+                    <p>${g.definition}</p>
+                </div>
+
+                <div class="guide-section">
+                    <div class="section-title" style="font-size: 20px;">Why is Vocabulary Important?</div>
+                    <div class="guide-box">
+                        <ul class="check-list">
+                            ${g.benefits.map(b => `<li>${b}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <div class="section-title" style="font-size: 20px;">Knowing a Word is More Than Meaning</div>
+                    <div class="guide-grid">
+                        ${g.whatIsVocab.map(v => `
+                            <div class="guide-card">
+                                <h4>👉 ${v.label}</h4>
+                                <p style="font-size: 14px; color: var(--text-muted); margin: 0;">${v.desc}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <div class="section-title" style="font-size: 20px;">📌 Main Word Categories</div>
+                    <p>Learning focuses mainly on the first four categories listed below.</p>
+                    <div class="word-pill-box">
+                        ${g.mainCategories.map(c => `<span class="word-pill" style="background: #eef2ff; color: var(--primary); font-size: 15px; padding: 10px 20px; border: 1px solid var(--border);">${c}</span>`).join('')}
+                    </div>
+                </div>
+
+                <!-- Nouns Section -->
+                <div class="guide-section">
+                    <div class="section-title" style="font-size: 24px; color: var(--accent);">🟢 NOUN VOCABULARY <small style="font-weight: 500; opacity: 0.7;">(Naming Words)</small></div>
+                    <div class="guide-grid">
+                        ${g.nounCategories.map(nc => `
+                            <div class="guide-card">
+                                <h4>${nc.title}</h4>
+                                <div class="word-pill-box">
+                                    ${nc.words.map(w => `<span class="word-pill">${w}</span>`).join('')}
+                                </div>
+                                <div style="margin-top: 15px; padding: 10px; background: #f8fafc; border-radius: 10px; font-size: 13px;">
+                                    <strong>Example:</strong> ${nc.example}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- Verbs Section -->
+                <div class="guide-section">
+                    <div class="section-title" style="font-size: 24px; color: #3b82f6;">🟢 VERB VOCABULARY <small style="font-weight: 500; opacity: 0.7;">(Action Words)</small></div>
+                    <div class="guide-grid">
+                        ${g.verbCategories.map(vc => `
+                            <div class="guide-card">
+                                <h4>${vc.title}</h4>
+                                <div class="word-pill-box">
+                                    ${vc.words.map(w => `<span class="word-pill">${w}</span>`).join('')}
+                                </div>
+                                ${vc.example ? `<div style="margin-top: 15px; padding: 10px; background: #f8fafc; border-radius: 10px; font-size: 13px;"><strong>Example:</strong> ${vc.example}</div>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- Adjectives -->
+                <div class="guide-section">
+                    <div class="section-title" style="font-size: 24px; color: var(--secondary);">🟢 ADJECTIVE VOCABULARY <small style="font-weight: 500; opacity: 0.7;">(Describing Words)</small></div>
+                    <div class="guide-grid">
+                        ${g.adjectives.map(adj => `
+                            <div class="guide-card">
+                                <h4>${adj.title}</h4>
+                                <div class="word-pill-box">
+                                    ${adj.words.map(w => `<span class="word-pill">${w}</span>`).join('')}
+                                </div>
+                                ${adj.example ? `<div style="margin-top: 15px; padding: 10px; background: #f8fafc; border-radius: 10px; font-size: 13px;"><strong>Example:</strong> ${adj.example}</div>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- Special Lists -->
+                <div class="guide-section">
+                    <div class="section-title" style="font-size: 20px;">Daily, Emotion & Academic Words</div>
+                    <div class="guide-grid">
+                        <div class="guide-card">
+                            <h4>Daily English</h4>
+                            <div class="word-pill-box">${g.dailyWords.map(w => `<span class="word-pill">${w}</span>`).join('')}</div>
+                        </div>
+                        <div class="guide-card">
+                            <h4>Emotion Words</h4>
+                            <div class="word-pill-box">${g.emotionWords.map(w => `<span class="word-pill">${w}</span>`).join('')}</div>
+                        </div>
+                        <div class="guide-card">
+                            <h4>Academic Vocab</h4>
+                            <div class="word-pill-box">${g.academicVocab.map(w => `<span class="word-pill">${w}</span>`).join('')}</div>
+                        </div>
+                        <div class="guide-card">
+                            <h4>Transition Words</h4>
+                            <div class="word-pill-box">${g.transitionWords.map(w => `<span class="word-pill">${w}</span>`).join('')}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Synonyms & Antonyms -->
+                <div class="guide-section">
+                    <div class="guide-grid">
+                        <div class="guide-card">
+                            <h4 style="color: #6366f1;">🔵 Synonyms <small style="font-weight: 500;">(Same Meaning)</small></h4>
+                            <table class="comparison-table">
+                                ${g.synonyms.map(s => `<tr><td>${s.w1}</td><td style="color:var(--primary); font-weight:700;">→</td><td>${s.w2}</td></tr>`).join('')}
+                            </table>
+                        </div>
+                        <div class="guide-card">
+                            <h4 style="color: #f43f5e;">🔴 Antonyms <small style="font-weight: 500;">(Opposites)</small></h4>
+                            <table class="comparison-table">
+                                ${g.antonyms.map(a => `<tr><td>${a.w1}</td><td style="color:var(--secondary); font-weight:700;">↔</td><td>${a.w2}</td></tr>`).join('')}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phrasal Verbs & Collocations -->
+                <div class="guide-section">
+                    <div class="guide-grid">
+                        <div class="guide-card">
+                            <h4 style="color: #8b5cf6;">📓 Phrasal Verbs</h4>
+                            <table class="comparison-table">
+                                ${g.phrasalVerbs.map(p => `<tr><td><strong>${p.v}</strong></td><td>${p.m}</td></tr>`).join('')}
+                            </table>
+                        </div>
+                        <div class="guide-card">
+                            <h4 style="color: #ec4899;">📕 Collocations</h4>
+                            <div class="word-pill-box">
+                                ${g.collocations.map(c => `<span class="word-pill" style="background:#fdf2f8;">${c}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Common Errors -->
+                <div class="guide-section">
+                    <div class="section-title" style="color: #ef4444;">⚠️ Common Vocabulary Errors</div>
+                    <div class="error-box">
+                        <div class="guide-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                            ${g.commonErrors.map(e => `
+                                <div>
+                                    <span style="color: #ef4444; text-decoration: line-through;">${e.wrong}</span><br>
+                                    <span style="color: #10b981; font-weight: 800; font-size: 18px;">✅ ${e.right}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Method -->
+                <div class="guide-section">
+                    <div class="section-title">🧠 How to Learn Vocabulary Properly</div>
+                    <div class="guide-box">
+                        <p><strong>Daily Goal:</strong> ${g.learningMethod.daily}</p>
+                        <div class="step-container">
+                            ${g.learningMethod.steps.map((s, i) => `
+                                <div class="step-item">
+                                    <div class="step-num">${i + 1}</div>
+                                    <div style="font-weight: 700; font-size: 14px;">${s}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div style="margin-top: 30px; text-align: center; border: 2px dashed var(--primary); padding: 15px; border-radius: 12px; font-weight: 800; color: var(--primary);">
+                             Memory Rule: ${g.learningMethod.rule}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-ribbon">
+                    <h3 style="margin: 0 0 10px; font-size: 24px;">🚀 Vocabulary Mastery</h3>
+                    <p style="margin: 0; opacity: 0.9;">Strong vocabulary = Strong English. Keep practicing every day!</p>
+                </div>
+            `;
+            container.innerHTML = html;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderWordCard(w) {
+            let detailsHtml = '';
+            if (w.synonyms || w.antonyms) {
+                detailsHtml = `
+                    <div class="word-details">
+                        ${w.synonyms ? `<div class="detail-item syn"><span>🔗 Syn:</span> ${w.synonyms.join(', ')}</div>` : ''}
+                        ${w.antonyms ? `<div class="detail-item ant"><span>↔ Ant:</span> ${w.antonyms.join(', ')}</div>` : ''}
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="word-card" data-word="${w.word.toLowerCase()}" data-meaning="${w.meaning.toLowerCase()}">
+                    <div class="word-header">
+                        <div class="word-title">${w.word}</div>
+                        <div class="word-phonetic">${w.phonetic}</div>
+                    </div>
+                    <div class="word-meaning">${w.meaning}</div>
+                    <div class="word-hindi">${w.hindi}</div>
+                    ${detailsHtml}
+                    <div class="example-box">
+                        <div class="example-title">💡 REAL-LIFE EXAMPLES</div>
+                        <ul style="margin: 0; padding-left: 18px; color: #475569; font-size: 15px; font-weight: 500;">
+                            ${w.examples.map(ex => `<li style="margin-bottom: 8px;">${ex}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        function searchWords(query) {
+            const filter = query.toLowerCase();
+            const cards = document.querySelectorAll(".word-card");
+
+            cards.forEach(card => {
+                const text = card.getAttribute("data-word") + " " + card.getAttribute("data-meaning");
+                if (text.includes(filter)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

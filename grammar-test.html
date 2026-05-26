@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Practice Test | Speakora</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4338ca;
+            --secondary: #db2777;
+            --accent: #059669;
+            --bg: #f8fafc;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: white;
+            padding: 16px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 26px;
+            font-weight: 800;
+            color: #1e3a8a;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .exit-btn {
+            padding: 10px 24px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .exit-btn:hover {
+            background: #fee2e2;
+            color: #ef4444;
+            border-color: #fecaca;
+        }
+
+        .test-container {
+            max-width: 800px;
+            margin: 40px auto;
+            width: 90%;
+            flex-grow: 1;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .question-card {
+            background: white;
+            padding: 40px;
+            border-radius: 32px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-type {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .question-text {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        /* MCQ OPTIONS */
+        .options-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option-btn {
+            padding: 16px 24px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            background: white;
+            text-align: left;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: #f5f3ff;
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .option-circle {
+            width: 20px;
+            height: 20px;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* INPUT FIELD (FIB & OneWord) */
+        .input-field {
+            width: 100%;
+            padding: 18px 24px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 18px;
+            font-weight: 600;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(67, 56, 202, 0.1);
+        }
+
+        /* TRUE/FALSE */
+        .tf-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .tf-btn {
+            padding: 30px;
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            font-size: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            background: white;
+            transition: 0.3s;
+        }
+
+        .tf-btn.true:hover {
+            border-color: #10b981;
+            background: #ecfdf5;
+            color: #10b981;
+        }
+
+        .tf-btn.false:hover {
+            border-color: #ef4444;
+            background: #fef2f2;
+            color: #ef4444;
+        }
+
+        .tf-btn.selected.true {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .tf-btn.selected.false {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        .footer-nav {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .next-btn {
+            padding: 16px 40px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(67, 56, 202, 0.3);
+        }
+
+        .next-btn:disabled {
+            background: #cbd5e1;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67, 56, 202, 0.4);
+        }
+
+        /* RESULT VIEW */
+        .result-card {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 32px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 30px;
+            font-weight: 800;
+        }
+
+        .score-num {
+            font-size: 48px;
+        }
+
+        .score-label {
+            font-size: 14px;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn-primary {
+            padding: 14px 32px;
+            background: var(--primary);
+            color: white;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .btn-outline {
+            padding: 14px 32px;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: #f5f3ff;
+        }
+
+        .answer-key {
+            margin-top: 50px;
+            text-align: left;
+        }
+
+        .key-item {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 15px;
+        }
+
+        .status-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .key-content h4 {
+            margin: 0 0 5px;
+            color: var(--text);
+        }
+
+        .key-content p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .correct-ans {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .wrong-ans {
+            color: #ef4444;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 640px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .question-card {
+                padding: 30px 20px;
+            }
+
+            .question-text {
+                font-size: 20px;
+            }
+
+            .tf-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="assets/logo.png" alt="Speakora Logo">
+            Speakora
+        </div>
+        <a href="grammar.html" class="exit-btn">Exit Test</a>
+    </header>
+
+    <div class="test-container" id="test-view">
+        <div class="progress-container">
+            <div class="progress-info">
+                <span id="topic-label">Loading Topic...</span>
+                <span id="progress-text">Queston 0 of 0</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div id="loading" style="text-align: center; padding: 100px;">
+            <h2>Preparing your exercise...</h2>
+        </div>
+
+        <div id="question-area" style="display: none;">
+            <div class="question-card" id="question-card">
+                <span class="question-type" id="q-type">Multiple Choice</span>
+                <div class="question-text" id="q-text">Identify the correct noun form.</div>
+
+                <div id="ans-container">
+                    <!-- MCQ Options -->
+                    <div class="options-grid" id="mcq-options"></div>
+
+                    <!-- FIB / OneWord Input -->
+                    <input type="text" class="input-field" id="text-input" placeholder="Type your answer here..."
+                        style="display: none;">
+
+                    <!-- True/False Buttons -->
+                    <div class="tf-grid" id="tf-options" style="display: none;">
+                        <button class="tf-btn true" onclick="selectTF('True')">TRUE</button>
+                        <button class="tf-btn false" onclick="selectTF('False')">FALSE</button>
+                    </div>
+                </div>
+
+                <div class="footer-nav">
+                    <button class="next-btn" id="next-btn" disabled onclick="handleNext()">Next Question</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/grammar-questions.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const topicName = urlParams.get('topic');
+
+        let questions = [];
+        let currentIdx = 0;
+        let score = 0;
+        let userChoices = []; // Store {question, userAns, correctAns, isCorrect}
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!topicName || !GRAMMAR_QUESTIONS[topicName]) {
+                document.getElementById('test-view').innerHTML = `
+                    <div class="result-card">
+                        <h2>Oops! Topic Not Found</h2>
+                        <p>We couldn't find questions for "${topicName || 'Unknown'}".</p>
+                        <a href="grammar.html" class="btn-primary">Go Back</a>
+                    </div>
+                `;
+                return;
+            }
+
+            questions = GRAMMAR_QUESTIONS[topicName];
+            // Shuffle questions and select max 20 if more exist
+            questions = questions.sort(() => Math.random() - 0.5).slice(0, 20);
+
+            document.getElementById('topic-label').innerText = topicName;
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('question-area').style.display = 'block';
+
+            showQuestion();
+        });
+
+        function showQuestion() {
+            const q = questions[currentIdx];
+            document.getElementById('progress-text').innerText = `Question ${currentIdx + 1} of ${questions.length}`;
+            document.getElementById('progress-fill').style.width = `${((currentIdx) / questions.length) * 100}%`;
+
+            const qTypeLabel = {
+                'mcq': 'Multiple Choice',
+                'fib': 'Fill in the Blank',
+                'tf': 'True or False',
+                'oneword': 'One Word Answer'
+            };
+
+            document.getElementById('q-type').innerText = qTypeLabel[q.type] || 'Question';
+            document.getElementById('q-text').innerText = q.question;
+
+            // Clear and hide all inputs
+            const mcqContainer = document.getElementById('mcq-options');
+            const textInput = document.getElementById('text-input');
+            const tfContainer = document.getElementById('tf-options');
+
+            mcqContainer.innerHTML = '';
+            mcqContainer.style.display = 'none';
+            textInput.style.display = 'none';
+            textInput.value = '';
+            tfContainer.style.display = 'none';
+            document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+
+            document.getElementById('next-btn').disabled = true;
+            document.getElementById('next-btn').innerText = (currentIdx === questions.length - 1) ? 'Finish Test' : 'Next Question';
+
+            if (q.type === 'mcq') {
+                mcqContainer.style.display = 'grid';
+                q.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.innerHTML = `<span class="option-circle"></span> ${opt}`;
+                    btn.onclick = () => selectMCQ(btn, opt);
+                    mcqContainer.appendChild(btn);
+                });
+            } else if (q.type === 'tf') {
+                tfContainer.style.display = 'grid';
+            } else {
+                textInput.style.display = 'block';
+                textInput.oninput = (e) => {
+                    document.getElementById('next-btn').disabled = (e.target.value.trim() === '');
+                };
+            }
+        }
+
+        let currentChoice = null;
+
+        function selectMCQ(btn, val) {
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            currentChoice = val;
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function selectTF(val) {
+            document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+            event.target.classList.add('selected');
+            currentChoice = val;
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function handleNext() {
+            const q = questions[currentIdx];
+            let userAns = '';
+
+            if (q.type === 'mcq' || q.type === 'tf') {
+                userAns = currentChoice;
+            } else {
+                userAns = document.getElementById('text-input').value.trim();
+            }
+
+            const isCorrect = (userAns.toLowerCase() === q.answer.toLowerCase());
+            if (isCorrect) score++;
+
+            userChoices.push({
+                question: q.question,
+                userAns: userAns,
+                correctAns: q.answer,
+                isCorrect: isCorrect
+            });
+
+            currentIdx++;
+            if (currentIdx < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const finalScorePercent = Math.round((score / questions.length) * 100);
+            document.getElementById('progress-fill').style.width = '100%';
+
+            // Save to LocalStorage Progress
+            saveProgress(finalScorePercent);
+
+            let resultHTML = `
+                <div class="result-card">
+                    <div class="score-circle">
+                        <span class="score-num">${finalScorePercent}%</span>
+                        <span class="score-label">Correct</span>
+                    </div>
+                    <h2>Congratulations!</h2>
+                    <p>You scored ${score} out of ${questions.length} on ${topicName}.</p>
+                    
+                    <div class="result-actions">
+                        <a href="grammar.html" class="btn-primary">Back to Lessons</a>
+                        <a href="javascript:location.reload()" class="btn-outline">Try Again</a>
+                    </div>
+
+                    <div class="answer-key">
+                        <h3 style="margin-bottom: 25px;">Detailed Review</h3>
+                        ${userChoices.map(c => `
+                            <div class="key-item">
+                                <span class="status-icon">${c.isCorrect ? '✅' : '❌'}</span>
+                                <div class="key-content">
+                                    <h4>${c.question}</h4>
+                                    <p>Your Answer: <span class="${c.isCorrect ? 'correct-ans' : 'wrong-ans'}">${c.userAns}</span> 
+                                    ${!c.isCorrect ? `<span class="correct-ans">Correct: ${c.correctAns}</span>` : ''}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('test-view').innerHTML = resultHTML;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function saveProgress(score) {
+            // Existing logic for learningData
+            let data = JSON.parse(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + 'learningData')) || {
+                completedLessons: 0,
+                totalLessons: 20,
+                quizzes: []
+            };
+
+            data.quizzes.push({
+                topic: topicName,
+                score: score,
+                date: new Date().toISOString()
+            });
+
+            if (window.SpeakoraActivity) {
+                SpeakoraActivity.log('test', `Finished <b>${topicName}</b> Grammar Test`, score, '#8b5cf6');
+            }
+
+            localStorage.setItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + 'learningData', JSON.stringify(data));
+
+            // NEW: Sync with Progress.html
+            const currentHighest = parseInt(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "highestScore_grammar") || "0");
+            if (score > currentHighest) {
+                localStorage.setItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "highestScore_grammar", score.toString());
+            }
+        }
+    </script>
+    <script src="js/activity-logger.js"></script>
+</body>
+
+</html>

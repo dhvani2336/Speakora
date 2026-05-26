@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Speakora | Certificate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #ec4899;
+            --gold: #fbbf24;
+            --gold-dark: #d97706;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 20px 40px rgba(79, 70, 229, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px 60px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 26px;
+            font-weight: 800;
+            color: #1e3a8a;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .dashboard-icon {
+            font-size: 24px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.2s;
+        }
+
+        .dashboard-icon:hover {
+            color: var(--primary-hover);
+        }
+
+        /* MAIN */
+        .cert-bg {
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .page-title {
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 40px;
+            background: linear-gradient(to right, #1e40af, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        /* CERTIFICATE */
+        .certificate {
+            background: white;
+            width: 100%;
+            max-width: 900px;
+            padding: 60px;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        /* Double border effect for premium certificate look */
+        .certificate::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            /* lighter gold */
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .cert-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 800;
+            color: #1e3a8a;
+        }
+
+        .cert-brand img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .cert-title {
+            font-size: 46px;
+            font-weight: 900;
+            color: var(--gold-dark);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .cert-subtitle {
+            font-size: 20px;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .cert-name {
+            font-size: 54px;
+            margin: 20px 0;
+            font-weight: 700;
+            color: var(--text-main);
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            position: relative;
+            display: inline-block;
+        }
+
+        .cert-name::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: -10%;
+            width: 120%;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .cert-text {
+            font-size: 20px;
+            line-height: 1.8;
+            color: #4b5563;
+            max-width: 600px;
+            margin: 40px auto 50px;
+        }
+
+        .cert-footer {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0 40px;
+            position: relative;
+            z-index: 2;
+            /* above borders */
+        }
+
+        .signature-block {
+            text-align: center;
+        }
+
+        .signature-line {
+            width: 200px;
+            height: 1px;
+            background: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .signature-text {
+            font-size: 16px;
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .seal-badge {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 14px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(217, 119, 6, 0.4);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 4px dashed rgba(255, 255, 255, 0.5);
+        }
+
+        .dl-btn {
+            margin-top: 40px;
+            padding: 16px 36px;
+            border: none;
+            border-radius: 12px;
+            background: var(--primary);
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .dl-btn:hover:not(:disabled) {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        /* LOCKED GRID */
+        .locked-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .locked {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .locked::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #9ca3af;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .locked:hover {
+            transform: translateY(-5px);
+            opacity: 1;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .lock-icon-container {
+            width: 60px;
+            height: 60px;
+            background: #f3f4f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 20px;
+            color: #6b7280;
+        }
+
+        .locked h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .locked p {
+            font-size: 15px;
+            color: var(--text-light);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 30px;
+            text-align: center;
+            color: #9ca3af;
+            background: transparent;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 16px 20px;
+            }
+
+            .certificate {
+                padding: 40px 20px;
+            }
+
+            .cert-title {
+                font-size: 32px;
+            }
+
+            .cert-name {
+                font-size: 36px;
+            }
+
+            .cert-text {
+                font-size: 16px;
+            }
+
+            .cert-footer {
+                flex-direction: column;
+                gap: 30px;
+                align-items: center;
+            }
+
+            .seal-badge {
+                position: static;
+                transform: none;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="assets/logo.png" alt="Speakora Logo">
+            Speakora
+        </div>
+    </header>
+
+    <div class="cert-bg">
+        <h1 class="page-title">Your Achievements</h1>
+
+        <div id="mainCert"></div>
+
+        <div id="lockedCerts" class="locked-grid"></div>
+
+    </div>
+
+    <footer>
+        © 2026 Speakora. All rights reserved.
+    </footer>
+
+    <script>
+
+        const userId = localStorage.getItem("userId");
+
+        fetch("http://localhost:5000/api/user/profile/" + userId)
+            .then(res => res.json())
+            .then(user => {
+
+                const languages = user.languages || [];
+                // We need exactly 3 slots to show the certificates
+                const slots = [0, 1, 2];
+
+                // 1. CURRENT LANGUAGE (Visible but Locked Download)
+                const currentLanguage = localStorage.getItem("language");
+                let mainLang = "Language";
+                let otherLangs = [];
+
+                if (currentLanguage && languages.includes(currentLanguage)) {
+                    mainLang = currentLanguage;
+                    otherLangs = languages.filter(l => l !== currentLanguage);
+                } else if (languages.length > 0) {
+                    mainLang = languages[0];
+                    otherLangs = languages.slice(1);
+                }
+
+                document.getElementById("mainCert").innerHTML = `
+                    <div class="certificate">
+                        <div class="cert-brand">
+                            <img src="assets/logo.png" alt="Speakora Logo">
+                            Speakora
+                        </div>
+                        <div class="cert-title">Certificate of Achievement</div>
+                        <div class="cert-subtitle">This is proudly presented to</div>
+                        
+                        <div class="cert-name">${user.name || 'Student Model'}</div>
+                        
+                        <div class="cert-text">
+                            for demonstrating commitment to linguistic excellence and actively participating in the 
+                            <b>Speakora ${mainLang} Learning Program</b>.<br>
+                            Keep advancing to unlock full certification and verifiable credentials.
+                        </div>
+                        
+                        <div class="cert-footer">
+                            <div class="signature-block">
+                                <div class="signature-line"></div>
+                                <div class="signature-text">Date: ${new Date().toLocaleDateString()}</div>
+                            </div>
+                            
+                            <div class="seal-badge">Official<br>Seal</div>
+                            
+                            <div class="signature-block">
+                                <div class="signature-line" style="background: url('assets/logo.png') center/contain no-repeat; opacity:0.1; height:30px; margin-bottom:-20px;"></div>
+                                <div class="signature-line"></div>
+                                <div class="signature-text">Speakora Authority</div>
+                            </div>
+                        </div>
+                        
+                        <!-- DL BUTTON OUTSIDE THE BORDERED AREA OVERLAP -->
+                    </div>
+                    <!-- LOCKED DOWNLOAD BUTTON -->
+                    <button class="dl-btn" onclick="alert('Complete all lessons and practice tests to download official PDF.')" style="background: var(--text-light); margin-top:-20px; position:relative; z-index:10;">
+                        <span>🔒</span> Official PDF Locked
+                    </button>
+                    <br><br><br>
+                `;
+
+                // 2. OTHER SLOTS (Completely Blurred/Locked)
+                let otherHtml = "";
+
+                // Show placeholders for 2nd and 3rd languages
+                // If user has selected additional languages, show them blurred
+                if (otherLangs.length > 0) {
+                    otherLangs.forEach(l => {
+                        otherHtml += `
+                          <div class="locked">
+                             <div class="lock-icon-container">🔒</div>
+                             <h3>${l} Program</h3>
+                             <p>Complete the course & upgrade to unlock this certificate.</p>
+                          </div>`;
+                    });
+                }
+
+                // If less than 3 languages selected, show empty placeholders
+                const emptySlots = 2 - otherLangs.length;
+                for (let i = 0; i < emptySlots; i++) {
+                    otherHtml += `
+                          <div class="locked" style="border-style: dashed;">
+                             <div class="lock-icon-container">➕</div>
+                             <h3>Empty Slot</h3>
+                             <p>Select another language in your dashboard.</p>
+                          </div>`;
+                }
+
+                document.getElementById("lockedCerts").innerHTML = otherHtml;
+            });
+
+    </script>
+
+    <script src="js/global-nav.js"></script>
+</body>
+
+</html>

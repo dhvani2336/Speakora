@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Speakora Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+    }
+
+    header {
+      background: white;
+      padding: 16px 60px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .container {
+      padding: 40px 60px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Speakora Logo">
+      Speakora
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>Admin Dashboard</h2>
+
+    <button onclick="showUsers()">View Users</button>
+    <button onclick="clearUsers()">Delete All Users</button>
+    <button onclick="viewPayments()">View Payments</button>
+
+    <p id="out"></p>
+
+  </div>
+
+  <script>
+    function showUsers() {
+      let data = "";
+      for (let i = 0; i < localStorage.length; i++) {
+        let k = localStorage.key(i);
+        if (k != "p_name" && k != "p_lang" && k != "p_level" && k != "logged") {
+          data += k + "<br>";
+        }
+      }
+      document.getElementById("out").innerHTML = data;
+    }
+
+    function clearUsers() {
+      ['userId', 'currentUser', 'loggedIn', 'name', 'email', 'subscription', 'language', 'languages', 'pendingDeletion', 'deletionRequestTime'].forEach(k => localStorage.removeItem(k));
+      alert("All Users Removed");
+    }
+
+    function viewPayments() {
+      alert("Total Revenue: ₹499");
+    }
+  </script>
+
+  <script src="js/global-nav.js"></script>
+</body>
+
+</html>

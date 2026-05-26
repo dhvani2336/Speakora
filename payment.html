@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Subscription | Speakora</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --secondary: #ec4899;
+      --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      --text-main: #1f2937;
+      --text-light: #6b7280;
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.8);
+      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
+      --shadow-hover: 0 20px 40px rgba(79, 70, 229, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 16px 60px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e3a8a;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    /* ===== MAIN ===== */
+    main {
+      flex: 1;
+      max-width: 1100px;
+      margin: 50px auto 70px;
+      padding: 0 30px;
+      width: 100%;
+    }
+
+    /* ===== HERO BANNER ===== */
+    .hero-banner {
+      background: linear-gradient(135deg, #4f46e5, #c026d3);
+      padding: 50px 40px;
+      border-radius: 24px;
+      color: white;
+      margin-bottom: 60px;
+      box-shadow: 0 20px 40px rgba(79, 70, 229, 0.2);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 10%;
+      width: 250px;
+      height: 250px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      right: 15%;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-banner h1 {
+      font-size: 42px;
+      margin: 0 0 12px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-banner p {
+      font-size: 18px;
+      opacity: 0.9;
+      margin: 0 auto;
+      color: #e0e7ff;
+      max-width: 600px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== PLANS ===== */
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .plan-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .plan-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: var(--card-color, #4f46e5);
+      border-radius: 20px 20px 0 0;
+      opacity: 0.8;
+      transition: 0.3s ease;
+    }
+
+    /* Plan Specific Colors */
+    .plan-free {
+      --card-color: #6b7280;
+      --card-rgb: 107, 114, 128;
+    }
+
+    .plan-pro {
+      --card-color: #3b82f6;
+      --card-rgb: 59, 130, 246;
+    }
+
+    .plan-premium {
+      --card-color: #ec4899;
+      --card-rgb: 236, 72, 153;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-8px);
+      background: white;
+      box-shadow: 0 20px 40px rgba(var(--card-rgb, 79, 70, 229), 0.15);
+      border-color: rgba(var(--card-rgb, 79, 70, 229), 0.3);
+    }
+
+    .plan-card:hover::before {
+      opacity: 1;
+      height: 8px;
+    }
+
+    .plan-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .plan-price {
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+    }
+
+    .plan-price span {
+      font-size: 16px;
+      color: var(--text-light);
+      font-weight: 500;
+      letter-spacing: normal;
+    }
+
+    .plan-features {
+      list-style: none;
+      flex: 1;
+      margin-bottom: 30px;
+    }
+
+    .plan-features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      color: var(--text-main);
+      font-size: 15px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .plan-features li:last-child {
+      border-bottom: none;
+    }
+
+    .feature-check {
+      color: var(--card-color);
+      font-weight: bold;
+    }
+
+    .subscribe-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+    }
+
+    .subscribe-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+    }
+
+    .current-btn {
+      background: #10b981;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+    }
+
+    .current-btn:hover {
+      background: #059669;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+    }
+
+    .active-plan {
+      border: 2px solid #10b981;
+      transform: scale(1.02);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: transparent;
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .site-header {
+        padding: 16px 20px;
+      }
+
+      .hero-banner {
+        padding: 40px 20px;
+      }
+
+      .hero-banner h1 {
+        font-size: 32px;
+      }
+
+      .plan-card.active-plan {
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <a href="home.html" class="logo">
+      <img src="assets/logo.png" alt="Speakora Logo">
+      Speakora
+    </a>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main>
+    <div class="hero-banner">
+      <h1>Choose Your Plan</h1>
+      <p>Upgrade your learning and unlock all premium features 🚀</p>
+    </div>
+
+    <div class="plan-grid">
+
+      <!-- FREE PLAN -->
+      <div class="plan-card plan-free active-plan">
+        <div class="plan-title">Free</div>
+        <div class="plan-price">₹0 <span>/ month</span></div>
+        <ul class="plan-features">
+          <li><span class="feature-check">✔</span> Basic Lessons</li>
+          <li><span class="feature-check">✔</span> Limited Practice</li>
+          <li><span class="feature-check">✔</span> AI Speaking</li>
+          <li><span class="feature-check">✔</span> Certificates</li>
+        </ul>
+        <button class="subscribe-btn current-btn" onclick="goDashboard()">
+          Current Plan
+        </button>
+      </div>
+
+      <!-- PRO PLAN -->
+      <div class="plan-card plan-pro">
+        <div class="plan-title">Pro</div>
+        <div class="plan-price">₹499 <span>/ month</span></div>
+        <ul class="plan-features">
+          <li><span class="feature-check">✔</span> All Lessons</li>
+          <li><span class="feature-check">✔</span> Unlimited Practice</li>
+          <li><span class="feature-check">✔</span> AI Speaking</li>
+          <li><span class="feature-check">✔</span> Certificates</li>
+        </ul>
+        <button class="subscribe-btn" onclick="comingSoon()">
+          Subscribe
+        </button>
+      </div>
+
+      <!-- PREMIUM PLAN -->
+      <div class="plan-card plan-premium">
+        <div class="plan-title">Premium</div>
+        <div class="plan-price">₹999 <span>/ month</span></div>
+        <ul class="plan-features">
+          <li><span class="feature-check">✔</span> Everything in Pro</li>
+          <li><span class="feature-check">✔</span> 1-on-1 AI Coach</li>
+          <li><span class="feature-check">✔</span> Advanced Tests</li>
+          <li><span class="feature-check">✔</span> Priority Support</li>
+        </ul>
+        <button class="subscribe-btn" onclick="comingSoon()">
+          Subscribe
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    © 2026 Speakora. All rights reserved.
+  </footer>
+
+  <script>
+    function goDashboard() {
+      window.location.href = "course.html";
+    }
+
+    function comingSoon() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      alert("Payment integration coming soon...");
+    }
+  </script>
+
+  <script src="js/global-nav.js"></script>
+</body>
+
+</html>

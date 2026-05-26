@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Grammar Mastery Database | Speakora</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4338ca;
+            --secondary: #db2777;
+            --accent: #059669;
+            --bg: #fcfdfe;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --border: #e2e8f0;
+            --glass: rgba(255, 255, 255, 0.75);
+        }
+
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 16px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 26px;
+            font-weight: 800;
+            color: #1e3a8a;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .back-btn {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 10px 24px;
+            border-radius: 100px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 40px 100px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 40px;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: calc(100vh - 140px);
+            overflow-y: auto;
+            padding-right: 15px;
+            scrollbar-width: thin;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        .sidebar-level {
+            margin-bottom: 32px;
+            background: white;
+            padding: 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-level h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--primary);
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            padding-left: 8px;
+            font-weight: 800;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 14px;
+            text-decoration: none;
+            color: var(--text-muted);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .nav-link:hover {
+            background: #f1f5f9;
+            color: var(--text);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(67, 56, 202, 0.25);
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 32px;
+            padding: 60px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            min-height: 800px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .topic-header {
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .topic-header .level-badge {
+            background: #e0e7ff;
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .topic-header h2 {
+            font-size: 42px;
+            margin: 20px 0 12px;
+            color: #0f172a;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .definition-box {
+            font-size: 20px;
+            color: #334155;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            font-weight: 400;
+            padding: 32px;
+            background: #f8fafc;
+            border-radius: 20px;
+            border-left: 6px solid var(--primary);
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin: 56px 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #0f172a;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 8px;
+            height: 24px;
+            background: var(--secondary);
+            border-radius: 4px;
+        }
+
+        .info-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rule-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #475569;
+            align-items: flex-start;
+        }
+
+        .rule-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin-top: 8px;
+            flex-shrink: 0;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        }
+
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .type-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .type-card h4 {
+            margin: 0 0 10px;
+            color: var(--primary);
+        }
+
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .example-table th,
+        .example-table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mistake-box {
+            background: #fff1f2;
+            border-left: 4px solid #f43f5e;
+            padding: 20px;
+            border-radius: 8px;
+            color: #9f1239;
+        }
+
+        .practice-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 80px 20px;
+            background: white;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* MASTER CLASSES REDESIGN */
+        .tense-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .tense-card {
+            background: white;
+            border-radius: 32px;
+            border: 1px solid var(--border);
+            padding: 48px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tense-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .tense-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .tense-name {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
+        }
+
+        .tense-badge {
+            background: var(--bg);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 800;
+            border: 1px solid #e0e7ff;
+        }
+
+        .tense-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .tense-info-box {
+            background: #f8fafc;
+            padding: 24px;
+            border-radius: 24px;
+            border: 1px solid #e2e8f0;
+            transition: 0.3s;
+        }
+
+        .tense-card:hover .tense-info-box {
+            background: white;
+        }
+
+        .tense-info-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tense-info-value {
+            font-size: 16px;
+            color: var(--text);
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .formula-group {
+            background: #fdf2f8;
+            padding: 40px;
+            border-radius: 32px;
+            border: 1px solid #fce7f3;
+            margin-bottom: 40px;
+        }
+
+        .formula-item {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            padding: 16px 24px;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #fce7f3;
+            transition: 0.3s;
+        }
+
+        .formula-label {
+            font-weight: 800;
+            font-size: 12px;
+            color: var(--secondary);
+            width: 120px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .formula-code {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-weight: 700;
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        .tense-examples-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .tense-ex-item {
+            display: flex;
+            gap: 16px;
+            padding: 20px 24px;
+            background: #f0fdf4;
+            border-radius: 20px;
+            border: 1px solid #dcfce7;
+            align-items: center;
+        }
+
+        .tense-ex-tag {
+            font-size: 24px;
+            color: var(--accent);
+        }
+
+        .tense-ex-text {
+            font-size: 16px;
+            color: #166534;
+            font-weight: 600;
+        }
+
+        /* VERB TABLES */
+        .verb-table th {
+            font-weight: 800;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .verb-row:hover {
+            background: #f8fafc !important;
+        }
+
+        .verb-row strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* INFOGRAPHS / FAQ */
+        .faq-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--secondary);
+            box-shadow: var(--shadow-md);
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                padding: 32px;
+                border-radius: 24px;
+            }
+
+            .topic-header h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="assets/logo.png" alt="Speakora Logo">
+            Speakora
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar will be populated by JS -->
+        </aside>
+
+        <main class="main-content" id="grammar-view">
+            <div id="loading">Select a topic from the sidebar to start learning.</div>
+        </main>
+    </div>
+
+    <footer>
+        &copy; 2026 Speakora Academy. All rights reserved.
+    </footer>
+
+    <script src="js/grammar-data.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const sidebar = document.getElementById("sidebar");
+            const mainView = document.getElementById("grammar-view");
+
+            // Group by level
+            const levels = ["Level 1", "Level 2", "Level 3", "Level 4"];
+
+            levels.forEach(lvl => {
+                const section = document.createElement("div");
+                section.className = "sidebar-level";
+                section.innerHTML = `<h3>${lvl}</h3>`;
+
+                const learningData = JSON.parse(localStorage.getItem((localStorage.getItem("userId") || localStorage.getItem("currentUser") || "anonymous") + "_" + "learningData")) || { quizzes: [] };
+
+                GRAMMAR_DATABASE.filter(t => t.level === lvl).forEach(topic => {
+                    const topicQuizzes = learningData.quizzes.filter(q => q.topic === topic.title);
+                    const isCleared = topicQuizzes.length > 0 && Math.max(...topicQuizzes.map(q => q.score)) >= 90;
+
+                    const link = document.createElement("a");
+                    link.href = "#";
+                    link.className = "nav-link";
+                    link.innerHTML = `
+                        <span>${topic.sequence}. ${topic.title}</span>
+                        ${isCleared ? '<span style="color: #10b981; font-weight: 800; font-size: 14px;">✓</span>' : ''}
+                    `;
+                    link.onclick = (e) => {
+                        e.preventDefault();
+                        document.querySelectorAll(".nav-link").forEach(l => l.classList.remove("active"));
+                        link.classList.add("active");
+                        renderTopic(topic);
+                    };
+                    section.appendChild(link);
+                });
+
+                sidebar.appendChild(section);
+            });
+
+            function renderTopic(t) {
+                let html = `
+                    <div class="topic-header">
+                        <span class="level-badge">${t.level}</span>
+                        <h2>${t.title}</h2>
+                    </div>
+                    <div class="definition-box">
+                        ${t.definition || ""}
+                    </div>
+                `;
+
+                if (t.purpose) {
+                    html += `
+                        <div class="section-title">Purpose & Usage</div>
+                        <p>${t.purpose}</p>
+                    `;
+                }
+
+                if (t.rules && t.rules.length > 0) {
+                    html += `
+                        <div class="section-title">Rules</div>
+                        <div class="info-card">
+                            ${t.rules.map(r => `
+                                <div class="rule-item">
+                                    <div class="rule-dot"></div>
+                                    <div>${r}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                // SPECIAL RENDER FOR TENSES MASTER
+                if (t.tensesMaster && t.tensesMaster.length > 0) {
+                    window.currentTensesMaster = t.tensesMaster;
+                    html += `
+                        <div class="section-title">Complete 12 Tenses Masterclass</div>
+                        <div class="type-grid" id="tenses-list-view">
+                            ${t.tensesMaster.map((tense, index) => `
+                                <div class="tense-card" style="cursor: pointer; padding: 24px; transition: all 0.3s;" onclick="renderSingleTense(${index})" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='none'">
+                                    <div class="tense-name" style="font-size: 22px; margin-bottom: 12px;">${tense.name}</div>
+                                    <div class="tense-badge" style="display: inline-block;">${tense.category || "English Tense"}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div id="single-tense-view" style="display: none; margin-top: 20px;"></div>
+                    `;
+                }
+
+                // SPECIAL RENDER FOR MODALS MASTER
+                if (t.modalsMaster && t.modalsMaster.length > 0) {
+                    html += `
+                        <div class="section-title">Deep Dive: Modal Auxiliaries</div>
+                        <div class="tense-container">
+                            ${t.modalsMaster.map(modal => `
+                                <div class="tense-card" style="border-left: 5px solid var(--primary);">
+                                    <div class="tense-header">
+                                        <div class="tense-name">${modal.name}</div>
+                                        <div class="tense-badge">Modal Verb</div>
+                                    </div>
+
+                                    <div class="tense-info-box" style="margin-bottom: 20px; background: #eef2ff;">
+                                        <div class="tense-info-label">✨ Key Functions</div>
+                                        <div class="tense-info-value" style="color: var(--primary);">${modal.functions}</div>
+                                    </div>
+                                    
+                                    <div class="formula-group" style="background: #fdf2f8;">
+                                        <div class="tense-info-label">📝 Sentence Structures</div>
+                                        ${modal.structures.map(s => `
+                                            <div class="formula-item">
+                                                <span class="formula-label" style="width: 120px;">${s.label}</span>
+                                                <span class="formula-code">${s.pattern}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+
+                                    <div class="section-title" style="font-size: 16px; margin: 20px 0 10px;">Usage & Real-life Examples</div>
+                                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                                        ${modal.usageDetails.map(u => `
+                                            <div style="padding: 15px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+                                                <div style="font-weight: 700; color: var(--primary); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                                                    <div style="width: 6px; height: 6px; background: var(--primary); border-radius: 50%;"></div>
+                                                    ${u.title}
+                                                </div>
+                                                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px; padding-left: 14px;">${u.explanation}</div>
+                                                <div class="tense-examples-list" style="padding-left: 14px;">
+                                                    ${u.examples.map(ex => `
+                                                        <div class="tense-ex-item" style="background: white; border: 1px solid #f1f5f9;">
+                                                            <span class="tense-ex-tag">🔹</span>
+                                                            <span class="tense-ex-text">${ex}</span>
+                                                        </div>
+                                                    `).join('')}
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+
+                                    ${modal.proTips ? `
+                                        <div style="margin-top: 20px; padding: 15px; background: #fffbeb; border-radius: 12px; border: 1px solid #fef3c7;">
+                                            <div class="tense-info-label" style="color: #92400e;">💡 Important Rule</div>
+                                            <div style="font-size: 14px; color: #b45309; font-weight: 500;">${modal.proTips}</div>
+                                        </div>
+                                    ` : ""}
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                if (t.masterRules && t.masterRules.length > 0) {
+                    html += `
+                        <div class="section-title">🔴 MASTER RULES (EXAM VERY IMPORTANT)</div>
+                        <div class="info-card" style="background: #fff1f2; border-color: #fecdd3;">
+                            <ul style="margin: 0; padding-left: 20px;">
+                                ${t.masterRules.map(r => `<li style="margin-bottom: 10px; color: #9f1239; font-weight: 600;">${r}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+
+                if (t.comparison && t.comparison.length > 0) {
+                    html += `
+                        <div class="section-title">⚖️ Quick Comparison</div>
+                        <div class="info-card" style="background: #f0fdf4; border-color: #dcfce7;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                ${t.comparison.map(c => `
+                                    <div style="padding: 10px; background: white; border-radius: 8px; border: 1px solid #dcfce7;">
+                                        <strong style="color: var(--accent);">${c.pair}</strong>: ${c.diff}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (t.verbsMaster) {
+                    html += `
+                        <div class="section-title">Common Verb Forms (V1, V2, V3, V4, V5)</div>
+                        <div class="info-card" style="background: #fff; padding: 0; overflow: hidden;">
+                            <div style="padding: 15px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                                <div style="font-weight: 600; color: var(--primary);">Master Verb List</div>
+                                <input type="text" id="verbSearch" placeholder="Search verbs..." 
+                                    onkeyup="filterVerbs(this.value)"
+                                    style="padding: 8px 15px; border-radius: 20px; border: 1px solid #cbd5e1; outline: none; width: 250px;">
+                            </div>
+                            <div style="max-height: 500px; overflow-y: auto;">
+                                <table class="verb-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+                                    <thead style="position: sticky; top: 0; background: #4f46e5; color: white;">
+                                        <tr>
+                                            <th style="padding: 12px 15px;">V1 (Base / Hindi)</th>
+                                            <th style="padding: 12px 15px;">V2 (Past)</th>
+                                            <th style="padding: 12px 15px;">V3 (Participle)</th>
+                                            <th style="padding: 12px 15px;">V4 (s/es)</th>
+                                            <th style="padding: 12px 15px;">V5 (ing)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="verbTableBody">
+                                        ${t.verbsMaster.regular.map(v => `
+                                            <tr class="verb-row regular-verb" style="border-bottom: 1px solid #f1f5f9;">
+                                                <td style="padding: 12px 15px;"><strong>${v.v1}</strong> <br><small style="color:var(--text-muted)">${v.hindi}</small></td>
+                                                <td style="padding: 12px 15px;">${v.v2}</td>
+                                                <td style="padding: 12px 15px;">${v.v3}</td>
+                                                <td style="padding: 12px 15px;">${v.v4}</td>
+                                                <td style="padding: 12px 15px;">${v.v5}</td>
+                                            </tr>
+                                        `).join('')}
+                                        <tr style="background: #f1f5f9;"><td colspan="5" style="padding: 10px 15px; font-weight: 700; color: var(--secondary);">Irregular Verbs</td></tr>
+                                        ${t.verbsMaster.irregular.map(v => `
+                                            <tr class="verb-row irregular-verb" style="border-bottom: 1px solid #f1f5f9;">
+                                                <td style="padding: 12px 15px;"><strong>${v.v1}</strong> <br><small style="color:var(--text-muted)">${v.hindi}</small></td>
+                                                <td style="padding: 12px 15px;">${v.v2}</td>
+                                                <td style="padding: 12px 15px;">${v.v3}</td>
+                                                <td style="padding: 12px 15px;">${v.v4}</td>
+                                                <td style="padding: 12px 15px;">${v.v5}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                    `;
+                }
+
+                if (t.types && t.types.length > 0) {
+                    html += `
+                        <div class="section-title">Types & Categories</div>
+                        <div class="type-grid">
+                            ${t.types.map(type => `
+                                <div class="type-card">
+                                    <h4>${type.name}</h4>
+                                    <p>${type.description || ""}</p>
+                                    ${type.examples ? `<small><strong>Examples:</strong> ${Array.isArray(type.examples) ? type.examples.join(', ') : type.examples}</small>` : ""}
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                if (t.infoBlocks && t.infoBlocks.length > 0) {
+                    html += `
+                        <div style="display: flex; flex-direction: column; gap: 25px; margin-top: 10px;">
+                            ${t.infoBlocks.map(block => `
+                                <div class="tense-card" style="border-top: 4px solid var(--accent); background: white; padding: 20px;">
+                                    <div style="font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                                        ${block.icon || "📌"} ${block.title}
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                        ${block.items.map(item => `
+                                            <div style="padding: 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                                                <div style="font-weight: 700; color: var(--primary); font-size: 14px; margin-bottom: 5px;">${item.label}</div>
+                                                <div style="font-size: 13px; color: var(--text-muted);">${item.content}</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    ${block.footer ? `<div style="margin-top: 15px; font-size: 13px; font-style: italic; color: var(--text-muted); padding: 10px; background: #fffbeb; border-radius: 6px;">💡 ${block.footer}</div>` : ""}
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                if (t.structures && t.structures.length > 0) {
+                    html += `
+    <div class="section-title">Sentence Structures & Formations</div>
+    <div class="info-card" style="background: #fdf2f8; border-color: #fbcfe8;">
+        ${t.structures.map(s => `
+        <div style="margin-bottom: 15px;">
+            <code
+                style="background: white; padding: 4px 8px; border-radius: 6px; color: var(--secondary); font-weight: 700; border: 1px solid #fbcfe8;">${s.pattern}</code>
+            <p style="margin: 8px 0 0 5px; color: #701a75;">${s.explanation}</p>
+        </div>
+        `).join('')}
+    </div>
+    `;
+                }
+
+                if (t.examples && t.examples.length > 0) {
+                    html += `
+    <div class="section-title">Sentence Structures & Examples</div>
+    <div class="info-card">
+        <table class="example-table">
+            <thead>
+                <tr>
+                    <th>Sentence</th>
+                    <th>Type</th>
+                    <th>Meaning/Context</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${t.examples.map(ex => `
+                <tr>
+                    <td><strong>${ex.sentence}</strong></td>
+                    <td>${ex.type || "Positive"}</td>
+                    <td>${ex.meaning || "-"}</td>
+                </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    </div>
+    `;
+                }
+
+                if (t.commonMistakes && t.commonMistakes.length > 0) {
+                    html += `
+    <div class="section-title">Common Mistakes</div>
+    <div class="mistake-box">
+        ${t.commonMistakes.map(m => `
+        <p>❌ ${m.wrong}<br>✅ <strong>${m.correct}</strong><br><small>💡 ${m.reason}</small></p>
+        `).join('')}
+    </div>
+    `;
+                }
+
+                if (t.questions && t.questions.length > 0) {
+                    html += `
+                        <div class="section-title">Common Questions (FAQ)</div>
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            ${t.questions.map(q => `
+                                <div class="info-card" style="background: #f8fafc; border-left: 4px solid var(--secondary);">
+                                    <div style="font-weight: 700; color: var(--secondary); margin-bottom: 8px;">Q: ${q.question}</div>
+                                    <div style="font-size: 14px; color: var(--text);">${q.answer}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                if (t.summary) {
+                    html += `
+    <div class="section-title">Mini Summary</div>
+    <p><em>${t.summary}</em></p>
+    `;
+                }
+
+                if (t.practice && t.practice.length > 0) {
+                    html += `
+                        <div class="section-title">Practice Examples</div>
+                        <div class="practice-box">
+                            <ul>
+                                ${t.practice.map(p => `<li>${p}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+
+                // --- ADDED START PRACTICE BUTTON ---
+                html += `
+                    <div style="margin-top: 50px; padding: 40px; background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%); border-radius: 32px; color: white; text-align: center; box-shadow: var(--shadow-lg); border: 1px solid rgba(255,255,255,0.1);">
+                        <div style="font-size: 48px; margin-bottom: 20px;">🎉</div>
+                        <h3 style="margin-bottom: 12px; font-size: 28px; font-weight: 800; letter-spacing: -0.5px;">Mastered this topic?</h3>
+                        <p style="margin-bottom: 32px; opacity: 0.9; font-size: 17px; max-width: 500px; margin-left: auto; margin-right: auto;">Challenge yourself with our interactive exercise for <strong>${t.title}</strong> and earn a mastery score!</p>
+                        <a href="grammar-test.html?topic=${encodeURIComponent(t.title)}" 
+                           style="display: inline-block; padding: 18px 48px; background: white; color: var(--primary); border-radius: 100px; text-decoration: none; font-weight: 800; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 20px rgba(0,0,0,0.1); font-size: 15px; text-transform: uppercase; letter-spacing: 1px;">
+                           🚀 Start Topic Exercise
+                        </a>
+                    </div>
+                `;
+
+                mainView.innerHTML = html;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            window.renderSingleTense = function (index) {
+                const tense = window.currentTensesMaster[index];
+                const listView = document.getElementById("tenses-list-view");
+                const singleView = document.getElementById("single-tense-view");
+
+                listView.style.display = "none";
+                singleView.style.display = "block";
+
+                let html = `
+                    <button class="back-btn" style="margin-bottom: 24px; cursor: pointer; display: inline-block;" onclick="document.getElementById('tenses-list-view').style.display='grid'; document.getElementById('single-tense-view').style.display='none'; document.getElementById('tenses-list-view').scrollIntoView({behavior: 'smooth', block: 'start'})">← Back to 12 Tenses</button>
+                    <div class="tense-card" style="animation: fadeIn 0.4s ease-out;">
+                        <div class="tense-header">
+                            <div class="tense-name">${tense.name}</div>
+                            <div class="tense-badge">${tense.category || "English Tense"}</div>
+                        </div>
+                        
+                        <div class="tense-info-grid">
+                            <div class="tense-info-box">
+                                <div class="tense-info-label">❓ When to use?</div>
+                                <div class="tense-info-value">${tense.usage}</div>
+                            </div>
+                            <div class="tense-info-box">
+                                <div class="tense-info-label">🛠️ Helping Verb</div>
+                                <div class="tense-info-value">${tense.helpingVerb}</div>
+                            </div>
+                            <div class="tense-info-box">
+                                <div class="tense-info-label">🏃 Main Verb Form</div>
+                                <div class="tense-info-value">${tense.mainVerb}</div>
+                            </div>
+                            <div class="tense-info-box">
+                                <div class="tense-info-label">⏱️ Signal Words</div>
+                                <div class="tense-info-value">${tense.signalWords}</div>
+                            </div>
+                        </div>
+
+                        <div class="formula-group">
+                            <div class="tense-info-label">📝 Sentence Formulas</div>
+                            <div class="formula-item">
+                                <span class="formula-label">✔ Positive</span>
+                                <span class="formula-code">${tense.formulas.positive}</span>
+                            </div>
+                            <div class="formula-item">
+                                <span class="formula-label">❌ Negative</span>
+                                <span class="formula-code">${tense.formulas.negative}</span>
+                            </div>
+                            <div class="formula-item">
+                                <span class="formula-label">❓ Question</span>
+                                <span class="formula-code">${tense.formulas.question}</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="tense-info-label">📂 Examples (Practice)</div>
+                            <div class="tense-examples-list">
+                                ${tense.examples && tense.examples.length ? tense.examples.map(ex => `
+                                    <div class="tense-ex-item">
+                                        <span class="tense-ex-tag">${ex.type === 'Positive' ? '✔' : ex.type === 'Negative' ? '❌' : '❓'}</span>
+                                        <span class="tense-ex-text">${ex.text}</span>
+                                    </div>
+                                `).join('') : '<div style="color: var(--text-muted); font-size: 14px;">No examples available.</div>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                singleView.innerHTML = html;
+                singleView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            };
+
+            window.filterVerbs = function (val) {
+                let filter = val.toLowerCase();
+                document.querySelectorAll('.verb-row').forEach(row => {
+                    row.style.display = row.innerText.toLowerCase().includes(filter) ? '' : 'none';
+                });
+            }
+
+            // Load first topic by default
+            const firstLink = document.querySelector(".nav-link");
+            if (firstLink) firstLink.click();
+        });
+    </script>
+</body>
+
+</html>

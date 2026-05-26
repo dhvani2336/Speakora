@@ -1,0 +1,40 @@
+/**
+ * Speakora Common Styles
+ * Ensures the header logo and text look consistent across all pages.
+ */
+
+:root {
+  --primary: #4f46e5;
+  --secondary: #ec4899;
+  --accent: #10b981;
+}
+
+/* HEADER STYLE - UNITARY CONSISTENCY REQUIRED */
+header .logo, 
+.header .logo,
+.logo {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  font-size: 26px !important;
+  font-weight: 800 !important; /* Bold 800 - No variations allowed */
+  color: #1e3a8a !important;   /* Dark Blue */
+  text-decoration: none !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+
+header .logo img, 
+.header .logo img,
+.logo img {
+  width: 44px !important;
+  height: 44px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* Ensure font-weight is not overridden by page-specific styles */
+header a.logo span, 
+.logo-text,
+.logo {
+  font-weight: 800 !important;
+}

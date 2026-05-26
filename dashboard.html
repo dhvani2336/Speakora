@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | Speakora</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --secondary: #ec4899;
+      --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      --text-main: #1f2937;
+      --text-light: #6b7280;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 16px 60px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e3a8a;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    /* ===== MAIN ===== */
+    main {
+      max-width: 1200px;
+      margin: 40px auto 60px;
+      padding: 0 30px;
+      flex: 1;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero-banner {
+      background: linear-gradient(135deg, #4f46e5, #c026d3);
+      padding: 40px;
+      border-radius: 24px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 50px;
+      box-shadow: 0 20px 40px rgba(79, 70, 229, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative circles in hero */
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 250px;
+      height: 250px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      right: 120px;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-text h1 {
+      font-size: 38px;
+      margin: 0 0 10px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .hero-text .subtext {
+      font-size: 18px;
+      opacity: 0.9;
+      margin: 0;
+      color: #e0e7ff;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 16px;
+      z-index: 1;
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 12px 20px;
+      border-radius: 100px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-pill span {
+      font-size: 14px;
+      opacity: 0.9;
+      font-weight: 500;
+    }
+
+    /* ===== CARDS GRID ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: var(--card-color, #4f46e5);
+      border-radius: 20px 20px 0 0;
+      opacity: 0.8;
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      background: white;
+      box-shadow: 0 20px 40px rgba(var(--card-rgb, 79, 70, 229), 0.15);
+      border-color: rgba(var(--card-rgb, 79, 70, 229), 0.3);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+      height: 8px;
+    }
+
+    .card-icon-container {
+      width: 54px;
+      height: 54px;
+      background: rgba(var(--card-rgb, 79, 70, 229), 0.1);
+      border-radius: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: var(--card-color);
+      transition: 0.3s ease;
+    }
+
+    .card:hover .card-icon-container {
+      background: var(--card-color);
+      color: white;
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin: 0 0 10px;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--text-light);
+      font-size: 15px;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .card-arrow {
+      margin-top: 20px;
+      color: var(--card-color);
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: 0.3s ease;
+    }
+
+    .card:hover .card-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Assigning unique colors to cards */
+    .card-lessons {
+      --card-color: #3b82f6;
+      --card-rgb: 59, 130, 246;
+    }
+
+    .card-materials {
+      --card-color: #8b5cf6;
+      --card-rgb: 139, 92, 246;
+    }
+
+    .card-practice {
+      --card-color: #ec4899;
+      --card-rgb: 236, 72, 153;
+    }
+
+    .card-progress {
+      --card-color: #10b981;
+      --card-rgb: 16, 185, 129;
+    }
+
+    .card-subscription {
+      --card-color: #f59e0b;
+      --card-rgb: 245, 158, 11;
+    }
+
+    .card-ai {
+      --card-color: #6366f1;
+      --card-rgb: 99, 102, 241;
+    }
+
+    .card-speaking {
+      --card-color: #14b8a6;
+      --card-rgb: 20, 184, 166;
+    }
+
+    .card-certificate {
+      --card-color: #eab308;
+      --card-rgb: 234, 179, 8;
+    }
+
+
+    /* ===== FOOTER ===== */
+    footer {
+      margin-top: auto;
+      padding: 30px;
+      text-align: center;
+      font-size: 14px;
+      color: #94a3b8;
+      background: transparent;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 30px;
+      }
+
+      header {
+        padding: 16px 20px;
+      }
+
+      main {
+        padding: 0 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <script>
+    // Handle Google Redirect Login
+    const urlParams = new URLSearchParams(window.location.search);
+    const userData = urlParams.get('user_data');
+
+    if (userData) {
+      try {
+        const user = JSON.parse(decodeURIComponent(userData));
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("userId", user._id);
+        localStorage.setItem("name", user.name);
+        localStorage.setItem("email", user.email);
+        localStorage.setItem("language", user.languages[0] || "English");
+
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } catch (e) {
+        console.error("Error parsing user data", e);
+      }
+    }
+
+    if (localStorage.getItem("loggedIn") !== "true") {
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Speakora Logo">
+      Speakora
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main>
+
+    <div class="hero-banner">
+      <div class="hero-text">
+        <h1 id="welcomeText">Welcome to Speakora 👋</h1>
+        <p class="subtext" id="langText">Let’s start learning today.</p>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card card-lessons" onclick="nav('lesson.html')">
+        <div class="card-icon-container">📘</div>
+        <h3>Lessons</h3>
+        <p>Start learning step-by-step with guided, interactive stories.</p>
+        <div class="card-arrow">Jump in →</div>
+      </div>
+
+      <div class="card card-materials" onclick="nav('materials.html')">
+        <div class="card-icon-container">📂</div>
+        <h3>Materials</h3>
+        <p>Explore structured study materials crafted for your level.</p>
+        <div class="card-arrow">Browse →</div>
+      </div>
+
+      <div class="card card-practice" onclick="nav('test.html')">
+        <div class="card-icon-container">✍</div>
+        <h3>Practice Tests</h3>
+        <p>Test your grammar, reading, and vocabulary skills instantly.</p>
+        <div class="card-arrow">Start test →</div>
+      </div>
+
+      <div class="card card-progress" onclick="nav('progress.html')">
+        <div class="card-icon-container">📊</div>
+        <h3>My Progress</h3>
+        <p>Track your learning performance and see how far you've come.</p>
+        <div class="card-arrow">View stats →</div>
+      </div>
+
+      <div class="card card-subscription" onclick="nav('payment.html')">
+        <div class="card-icon-container">💳</div>
+        <h3>Subscription</h3>
+        <p>Manage your PRO plans, billing, and unlock new features.</p>
+        <div class="card-arrow">Manage →</div>
+      </div>
+
+      <div class="card card-ai" onclick="nav('ai.html')">
+        <div class="card-icon-container">🤖</div>
+        <h3>AI Tutor</h3>
+        <p>Ask doubts and chat with your intelligent AI language assistant.</p>
+        <div class="card-arrow">Chat now →</div>
+      </div>
+
+      <div class="card card-speaking" onclick="nav('speak.html')">
+        <div class="card-icon-container">🎤</div>
+        <h3>Speaking Practice</h3>
+        <p>Improve your pronunciation and fluency with voice feedback.</p>
+        <div class="card-arrow">Practice →</div>
+      </div>
+
+      <div class="card card-certificate" onclick="nav('certificate.html')">
+        <div class="card-icon-container">🏆</div>
+        <h3>Certificate</h3>
+        <p>Download verified certificates upon completing your course.</p>
+        <div class="card-arrow">Claim →</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 Speakora. Designed for fluency.
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    const name = localStorage.getItem("name") || "";
+    const firstName = name.split(" ")[0] || "Learner";
+    document.getElementById("welcomeText").innerText = `Welcome back, ${firstName} 👋`;
+
+    let lang = localStorage.getItem("language") || "English";
+    document.getElementById("langText").innerText = `Let’s master your ${lang} skills together.`;
+
+    function nav(page) {
+      const userLang = localStorage.getItem("language") || "English";
+      if (userLang === "English") {
+        window.location.href = page;
+      } else {
+        window.location.href = `coming-soon.html?feature=${encodeURIComponent(page)}`;
+      }
+    }
+  </script>
+  <script>
+    if (typeof loadDashboardLanguage === 'function') {
+      loadDashboardLanguage();
+    }
+  </script>
+  <script src="js/global-nav.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Choose Language | Speakora</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #ec4899;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 20px 40px rgba(79, 70, 229, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .site-header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px 60px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 26px;
+            font-weight: 800;
+            color: #1e3a8a;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        /* MAIN */
+        main {
+            flex: 1;
+            max-width: 1000px;
+            margin: 50px auto 70px;
+            padding: 0 30px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* HERO BANNER */
+        .hero-banner {
+            background: linear-gradient(135deg, #4f46e5, #c026d3);
+            padding: 50px 40px;
+            border-radius: 24px;
+            color: white;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: -60px;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            right: 40px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-banner h1 {
+            font-size: 38px;
+            margin: 0 0 12px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-banner p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin: 0;
+            color: #e0e7ff;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* GRID */
+        .languages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 30px;
+            justify-items: center;
+        }
+
+        .lang-card {
+            width: 100%;
+            max-width: 280px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            padding: 40px 30px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lang-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--card-color, #4f46e5);
+            border-radius: 20px 20px 0 0;
+            opacity: 0.8;
+            transition: 0.3s ease;
+        }
+
+        /* Specific Card Colors */
+        .lang-card:nth-child(1) {
+            --card-color: #3b82f6;
+            --card-rgb: 59, 130, 246;
+        }
+
+        .lang-card:nth-child(2) {
+            --card-color: #ec4899;
+            --card-rgb: 236, 72, 153;
+        }
+
+        .lang-card:nth-child(3) {
+            --card-color: #10b981;
+            --card-rgb: 16, 185, 129;
+        }
+
+        .lang-card:nth-child(4) {
+            --card-color: #f59e0b;
+            --card-rgb: 245, 158, 11;
+        }
+
+        .lang-card:nth-child(5) {
+            --card-color: #8b5cf6;
+            --card-rgb: 139, 92, 246;
+        }
+
+        .lang-card:nth-child(6) {
+            --card-color: #ef4444;
+            --card-rgb: 239, 68, 68;
+        }
+
+        .lang-card:hover {
+            transform: translateY(-8px);
+            background: white;
+            box-shadow: 0 20px 40px rgba(var(--card-rgb, 79, 70, 229), 0.15);
+            border-color: rgba(var(--card-rgb, 79, 70, 229), 0.3);
+        }
+
+        .lang-card:hover::before {
+            opacity: 1;
+            height: 8px;
+        }
+
+        .lang-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+            object-fit: cover;
+        }
+
+        .lang-card:hover img {
+            transform: scale(1.1) translateY(-5px);
+        }
+
+        .lang-card h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: transparent;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .site-header {
+                padding: 16px 20px;
+            }
+
+            .hero-banner {
+                padding: 40px 20px;
+            }
+
+            .hero-banner h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="logo">
+            <img src="assets/logo.png" alt="Speakora Logo">
+            Speakora
+        </div>
+
+    </header>
+
+    <main>
+        <div class="hero-banner">
+            <h1>Choose a language to start</h1>
+            <p>Select your preferred language and begin learning today.</p>
+        </div>
+
+        <div class="languages">
+
+            <div class="lang-card" onclick="selectLanguage('English')">
+                <img src="https://flagcdn.com/w80/gb.png">
+                <h3>English</h3>
+            </div>
+
+            <div class="lang-card" onclick="selectLanguage('Spanish')">
+                <img src="https://flagcdn.com/w80/es.png">
+                <h3>Spanish</h3>
+            </div>
+
+            <div class="lang-card" onclick="selectLanguage('French')">
+                <img src="https://flagcdn.com/w80/fr.png">
+                <h3>French</h3>
+            </div>
+
+            <div class="lang-card" onclick="selectLanguage('German')">
+                <img src="https://flagcdn.com/w80/de.png">
+                <h3>German</h3>
+            </div>
+
+            <div class="lang-card" onclick="selectLanguage('Japanese')">
+                <img src="https://flagcdn.com/w80/jp.png">
+                <h3>Japanese</h3>
+            </div>
+
+            <div class="lang-card" onclick="selectLanguage('Korean')">
+                <img src="https://flagcdn.com/w80/kr.png">
+                <h3>Korean</h3>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>© 2026 Speakora. All rights reserved.</footer>
+
+    <script>
+
+        let selected = JSON.parse(localStorage.getItem("languages")) || [];
+
+        async function selectLanguage(language) {
+
+            // 1. ALREADY SELECTED → DASHBOARD
+            if (selected.includes(language)) {
+                localStorage.setItem("language", language);
+                window.location.href = "dashboard.html";
+                return;
+            }
+
+            // 2. LIMIT CHECK (Max 3)
+            // If user tries to select a 4th language
+            if (selected.length >= 3) {
+                const upgrade = confirm("Subscribe to upgrade and access more services?");
+                if (upgrade) {
+                    window.location.href = "payment.html";
+                }
+                // If cancel, stay on page (do nothing)
+                return;
+            }
+
+            // 3. SAVE SELECTION
+            selected.push(language);
+            localStorage.setItem("languages", JSON.stringify(selected));
+            localStorage.setItem("language", language);
+
+            // 4. SYNC WITH BACKEND
+            const userId = localStorage.getItem("userId");
+            if (userId) {
+                try {
+                    await fetch("http://localhost:5000/api/user/update-language", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ userId, language })
+                    });
+                } catch (e) {
+                    console.error("Sync failed", e);
+                }
+            }
+
+            window.location.href = "dashboard.html";
+        }
+
+    </script>
+
+    <script src="js/global-nav.js"></script>
+</body>
+
+</html>
